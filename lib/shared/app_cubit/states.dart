@@ -14,6 +14,8 @@ class GymChangeProfileState extends GymStates {}
 
 class GymChangeLanguageState extends GymStates {}
 
+class GymChangeBranchState extends GymStates {}
+
 class ProfileImagePickerSuccessState extends GymStates {}
 
 class ProfileImagePickerErrorState extends GymStates {}
@@ -39,7 +41,7 @@ class GetUserSuccessState extends GymStates {}
 class GetUserErrorState extends GymStates {
   final String error;
 
-  GetUserErrorState(this.error);
+  GetUserErrorState({required this.error});
 }
 
 class GetAllUserLoadingState extends GymStates {}

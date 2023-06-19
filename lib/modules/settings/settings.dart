@@ -11,6 +11,7 @@ import 'package:blackgymcoach/shared/styles/iconly_broken.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter_svg/svg.dart';
 import 'edit_Profile.dart';
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -358,7 +359,7 @@ class SettingsScreen extends StatelessWidget {
                                           ),
                                         ],),
                                       ),
-                                      Row(
+                                  /*    Row(
                                         crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                         mainAxisAlignment:
@@ -388,7 +389,7 @@ class SettingsScreen extends StatelessWidget {
                                                 )),
                                           ),
                                         ],
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                 ),
@@ -397,7 +398,7 @@ class SettingsScreen extends StatelessWidget {
                           else
                             const SizedBox(),
                           const SizedBox(height: 15.0),
-                          Container(
+                       /*   Container(
                             width: double.infinity,
                             height: 40.0,
                             decoration: BoxDecoration(
@@ -503,7 +504,117 @@ class SettingsScreen extends StatelessWidget {
                                   ),
                                 ),
                               )
-                              : const SizedBox(),
+                              : const SizedBox(),*/
+                          Container(
+                            width: double.infinity,
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                                color: ColorsManager.grey,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0))),
+                            child: InkWell(
+                              onTap: () {
+                                cubit.changeBottomBranch();
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 2.0),
+                                    child: Icon(Icons.place_outlined,
+                                      color: ColorsManager.primary,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 4.0,
+                                  ),
+                                  Text(
+                                    "Our branches",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: ColorsManager.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 40.0,
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        cubit.myProfile
+                                            ? Icon(
+                                          Icons.expand_more,
+                                          color: ColorsManager.white,
+                                        )
+                                            : Icon(
+                                          Icons.navigate_next,
+                                          color: ColorsManager.white,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          if(cubit.ourBranch)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: Container(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                decoration: BoxDecoration(
+                                    color: ColorsManager.grey,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10.0))),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.only(top:0,start:0,end:0,bottom: 15.0),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            SizedBox(height: 8.0,),
+                                            Text("Beni Suef:3New Street, next to Al-Jamal Store, second floor",
+                                              style: const TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      251, 251, 251, 1),
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.w700
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Container(
+                                                color: ColorsManager.primary,
+                                                height: 2.0,
+                                                width: 150.0,
+                                                alignment: AlignmentDirectional.center,
+                                              ),
+                                            ),
+                                            Text("Shubra El Kheima:5Mohamed Awad Street, off El Nass Street, next to El Mahrousa Café, second floor",
+                                              style: const TextStyle(
+                                                color: Color.fromRGBO(
+                                                    251, 251, 251, 1),
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ],),
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          else
+                            const SizedBox(),
                           const SizedBox(height: 15.0),
                           Container(
                             width: double.infinity,
@@ -521,13 +632,13 @@ class SettingsScreen extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const HomeSignUpScreen(),
+                                          const HomeSignUpScreen(),
                                         ),
-                                        (route) => false);
+                                            (route) => false);
                                   },
                                   child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Padding(
@@ -562,13 +673,13 @@ class SettingsScreen extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const HomeSignUpScreen(),
+                                          const HomeSignUpScreen(),
                                         ),
-                                        (route) => false);
+                                            (route) => false);
                                   },
                                   child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Padding(
@@ -597,23 +708,22 @@ class SettingsScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 15.0),
                                 InkWell(
-                                  onTap: () {
-                                    Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomeSignUpScreen(),
-                                        ),
-                                        (route) => false);
+                                  onTap: () async {
+                                 /*   const  url ='https://www.facebook.com/ahmed.zayan99';
+                                    if(await canLaunch(url)){
+                                      await launch(url);
+                                    }
+                                    else{
+                                      throw Exception('Could not launch $url');
+                                    }*/
                                   },
                                   child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 2.0,
+                                        padding: const EdgeInsetsDirectional.only(start:2.0,
                                         ),
                                         child: Icon(
                                           Icons.facebook,
@@ -638,25 +748,32 @@ class SettingsScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 15.0),
                                 InkWell(
-                                  onTap: () {
-                                //    cubit.confirmPasswordReset();
+                                  onTap: () async {
+                                 /*   const  url ='https://www.instagram.com/ahmedzayan14/';
+                                    if(await canLaunch(url)){
+                                      await launch(url);
+                                    }
+                                    else{
+                                      throw Exception('Could not launch $url');
+                                    }*/
                                   },
                                   child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 2.0,
+                                        padding: const EdgeInsetsDirectional.only(start:4.0,
                                         ),
-                                        child: Icon(
-                                          Icons.facebook,
+                                        child:SvgPicture.asset(
+                                          'assets/images/instagram-logo-A807AD378B-seeklogo.com.svg',
                                           color: ColorsManager.primary,
+                                          width:22.0,
+                                          height: 22.0,
                                         ),
                                       ),
                                       const SizedBox(
-                                        width: 4.0,
+                                        width: 2.0,
                                       ),
                                       Text(
                                         "${'ourInstagram'.tr(context)}",
@@ -687,16 +804,16 @@ class SettingsScreen extends StatelessWidget {
                                     Radius.circular(10.0))),
                             child: InkWell(
                               onTap: () {
-                   //             GymCubit.get(context).logOut();
-                                CacheHelper.removeUserData(key: 'uId')
+                               // GymCubit.get(context).logOut();
+                                CacheHelper.removeUserData(key: 'token')
                                     .then((value) {
-                                  Navigator.pushAndRemoveUntil(
+                                  /* Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             const ChangeLanguageScreen(),
                                       ),
-                                      (route) => false);
+                                      (route) => false);*/
                                 });
                               },
                               child: Row(

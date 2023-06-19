@@ -1,8 +1,12 @@
+import 'dart:ui';
+
 import 'package:blackgymcoach/shared/app_cubit/cubit.dart';
 import 'package:blackgymcoach/shared/app_cubit/states.dart';
 import 'package:blackgymcoach/shared/components.dart';
 import 'package:blackgymcoach/shared/global/app_localization/app_localization.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,75 +20,72 @@ class HomeScreen extends StatelessWidget {
       listener: (context, state) {
       },
       builder: (context, state) {
-       return ConditionalBuilder(
-          condition:imgList.isNotEmpty,
-          builder:(context) {
                 return Scaffold(
-                  appBar: AppBar(),
-                    body: Column(
-                      crossAxisAlignment:  CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("${'welcome'.tr(context)}",
-                          style: const TextStyle(
-                              fontSize: 32.0,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.grey),),
-                        const SizedBox(
-                          height: 20.0,
-                        ),
-                        Image(image: AssetImage('assets/images/abdominal muscles.png'),height: 350.0,fit: BoxFit.cover),
-                        const SizedBox(
-                          height: 20.0,
-                        ),
-                        Text( "${'neverGiveUp'.tr(context)}",
+                    body:CustomPaint(
+                      painter: MyCustomPainter(),
+                      child: Column(
+                        crossAxisAlignment:  CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                        padding: EdgeInsetsDirectional.only(start: 40.0,),
+                            child: Text(" Coach\n  Page",
+                              maxLines: 2,
                               style: const TextStyle(
-                                  fontSize: 32.0,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.white),
+                                fontSize: 42.0,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.orange,
+                              ),),
+                          ),
+                          SizedBox(height: 40.0,),
+                          Padding(
+                            padding: EdgeInsetsDirectional.only(start: 40.0,),
+                            child: Text( " Never give\n  Up lose \nweigh build ",
+                              maxLines: 4,
+                              style: const TextStyle(
+                                fontSize: 32.0,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.grey,
+                              ),
                             ),
-                        const SizedBox(
-                          height: 20.0,
-                        ),
-                        Expanded(
-                            child: Text(
-                              "${'loseWeightBuildMuscle'.tr(context)}",
-                              style: TextStyle(
-                                  fontSize: 28,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w900),
-                              maxLines: 5,
-                            )),
-                        const Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                textStyle: const TextStyle(fontSize: 30),
-                              ),
-                              onPressed: () {
-                                GymCubit.get(context).changeIndex(1);
-                              },
-                              child:  Text(
-                                  "${'letsStart'.tr(context)}",
-                                style: TextStyle(
-                                    color: Colors.yellow, fontWeight: FontWeight.w600),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
+                          ),
+
+                        ],
+                      ),
                     ),
-                );
-              },
-          fallback: (context) => defaultProgressIndicator(),
-        );
+                    );
       },
     );
 
   }
 }
+
+
+
+class MyCustomPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()
+      ..color = Color.fromRGBO(0, 0, 0, 0.7294117647058823)
+      ..style = PaintingStyle.fill;
+
+
+    Path path = Path()
+      ..moveTo(0, 0)
+      ..lineTo(0, 1000)
+      ..quadraticBezierTo(700, 1600, 190,0)
+      ..close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+
  /*SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(

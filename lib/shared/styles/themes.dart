@@ -48,7 +48,7 @@ ThemeData getAppThemeData() => ThemeData(
       enabledBorder: OutlineInputBorder(
           borderSide:
           BorderSide(color: ColorsManager.primary, width: 1.5),
-          borderRadius:  BorderRadius.all(Radius.circular(8))),
+          borderRadius:  BorderRadius.all(Radius.circular(8.0))),
 
       /// Focused Border
       focusedBorder: OutlineInputBorder(

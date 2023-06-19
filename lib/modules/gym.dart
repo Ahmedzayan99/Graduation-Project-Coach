@@ -7,6 +7,8 @@ import 'package:blackgymcoach/shared/global/app_localization/app_localization.da
 import 'package:blackgymcoach/shared/styles/iconly_broken.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'Search.dart';
 class NewLayout extends StatelessWidget {
   final GlobalKey<ScaffoldState>_key = GlobalKey();
   NewLayout({Key? key}) : super(key: key);
@@ -23,15 +25,19 @@ class NewLayout extends StatelessWidget {
        decoration:const BoxDecoration(
          image:DecorationImage(
            image:AssetImage(
-               'assets/images/background1.png'),
-           fit:BoxFit. fill,opacity: 12.0, ),),
+               'assets/images/71a4cc94d46b22ffab0ef6d34999a55a.jpeg'),
+           fit:BoxFit.fill, ),),
        child: Scaffold(
             key: _key,
             body:cubit.screen[cubit.current],
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-        onPressed: () {  },
-        child: Icon(Icons.chat),),
+           floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>  SearchScreen(),));
+
+
+        },
+        child: Icon(Icons.search_sharp),),
            bottomNavigationBar: BottomAppBar(
         color: Color.fromRGBO(65, 65, 65, 1),
         shape: CircularNotchedRectangle(),

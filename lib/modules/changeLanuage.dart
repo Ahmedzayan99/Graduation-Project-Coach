@@ -31,8 +31,9 @@ class ChangeLanguageScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Image(image: AssetImage('assets/images/Logo.png')),
+
                     const SizedBox(height: 40.0,),
-                    Text("${'ChangeLanguage'.tr(context)}",
+                  /*  Text("${'ChangeLanguage'.tr(context)}",
                       maxLines:1,
                       style: TextStyle(
                         inherit: false,
@@ -94,7 +95,7 @@ class ChangeLanguageScreen extends StatelessWidget {
                               )),
                         ],
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ),

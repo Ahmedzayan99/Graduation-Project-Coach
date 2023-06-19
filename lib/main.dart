@@ -1,5 +1,7 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:blackgymcoach/modules/changeLanuage.dart';
 import 'package:blackgymcoach/modules/login_register/cubit/authentication_cubit.dart';
+import 'package:blackgymcoach/modules/login_register/homeSignup.dart';
 import 'package:blackgymcoach/shared/app_cubit/cubit.dart';
 import 'package:blackgymcoach/shared/app_cubit/states.dart';
 import 'package:blackgymcoach/shared/bloc_observer.dart';
@@ -10,6 +12,7 @@ import 'package:blackgymcoach/shared/network/remote/dio_helper.dart';
 import 'package:blackgymcoach/shared/styles/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 
 Future<void> main() async {
@@ -23,6 +26,7 @@ Future<void> main() async {
   // uId = CacheHelper.getDataIntoShPre(key: 'uId');
   var lang = CacheHelper.getDataIntoShPre(key: 'Lang');
 
+
   if (lang != null) {
     lang = lang;
   } else {
@@ -30,10 +34,29 @@ Future<void> main() async {
   }
   late Widget widget;
   if (uId != null) {
-    widget = const ChangeLanguageScreen();
+    widget = AnimatedSplashScreen(
+      splashIconSize: 130,
+      duration: 4000,
+      splashTransition: SplashTransition.fadeTransition,
+      backgroundColor: Colors.white60,
+      nextScreen: const HomeSignUpScreen(),
+      splash:SvgPicture.asset(
+        'assets/images/popcorn-svgrepo-com.svg',
+        alignment: AlignmentDirectional.center,
+      ),
+    );
   } else {
-    widget =  const ChangeLanguageScreen();
-
+    widget =  AnimatedSplashScreen(
+      splashIconSize: 130,
+      duration: 4000,
+      splashTransition: SplashTransition.fadeTransition,
+      backgroundColor: Colors.grey.shade900,
+      nextScreen: const HomeSignUpScreen(),
+      splash:SvgPicture.asset(
+        'assets/images/popcorn-svgrepo-com.svg',
+        alignment: AlignmentDirectional.center,
+      ),
+    );
   }
 
   //FirebaseAuth.instance.authStateChanges().listen((user) {
@@ -95,6 +118,7 @@ Widget build(BuildContext context) {
             }
             return supportLang.first;
           },
+
           debugShowCheckedModeBanner: false,
           home: startWidget,
           //startWidget ,

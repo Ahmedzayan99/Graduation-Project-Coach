@@ -2,16 +2,17 @@
 
 import 'dart:io';
 
-import 'package:blackgymcoach/model/chat_model.dart';
+import 'package:blackgymcoach/model/model/user_model.dart';
 import 'package:blackgymcoach/modules/home/home.dart';
 import 'package:blackgymcoach/modules/settings/settings.dart';
 import 'package:blackgymcoach/shared/app_cubit/states.dart';
+import 'package:blackgymcoach/shared/network/constants.dart';
 import 'package:blackgymcoach/shared/network/local/cache_helper.dart';
+import 'package:blackgymcoach/shared/network/remote/dio_helper.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 class GymCubit extends Cubit<GymStates> {
   GymCubit() : super(GymInitialState());
 
@@ -21,9 +22,6 @@ class GymCubit extends Cubit<GymStates> {
   int current = 0;
   List<Widget> screen = [
     HomeScreen(),
-    SettingsScreen(),
-    SettingsScreen(),
-    SettingsScreen(),
     SettingsScreen(),
   ];
   void changeIndex(int index) {
@@ -48,6 +46,19 @@ class GymCubit extends Cubit<GymStates> {
   void changeBottomLanguage() {
     language = !language;
     emit(GymChangeLanguageState());
+  }
+
+  bool Rating = false;
+
+  void RatingBottomLanguage() {
+    Rating = !Rating;
+    emit(GymChangeLanguageState());
+  }
+
+  bool ourBranch = false;
+  void changeBottomBranch() {
+    ourBranch = !ourBranch;
+    emit(GymChangeBranchState());
   }
 
   bool selectLanguage = true;
@@ -309,7 +320,22 @@ class GymCubit extends Cubit<GymStates> {
     emit(ChangeBottomSheetState());
   }
 
-  /*
+  UserModel? userModel;
+  Future<void> getUserData() async {
+    emit(GetUserLoadingState());
+    await DioHelper.getData(url: user)
+        .then((value) {
+      userModel = UserModel.fromJson(value.data);
+      emit(GetUserSuccessState());
+    })
+        .catchError((error) {
+      emit(GetUserErrorState(error: error.toString()),);
+      print(error.toString());
+    });
+  }
+
+
+/*
 
   late Database database;
   List<Map> newTasks = [];
@@ -412,152 +438,4 @@ class GymCubit extends Cubit<GymStates> {
   }
 
    */
-
-  late List<plays> amed = [
-    plays(image: 'assets/images/gym.jpg',
-      uId: '',
-      set: 4,),
-    plays(image: 'assets/images/gym.jpg',
-      uId: '',
-      set: 2,),
-    plays(image: 'assets/images/gym.jpg',
-      uId: '',
-      set: 1,),
-    plays(image: 'assets/images/gym.jpg',
-      uId: '',
-      set: 2,)
-  ];
-
-  List<Plan> plans =[
-    Plan(
-        date:DateTime(2023,4,20,0,0,0,0,0) ,
-        uId:'ssss',
-        play: [
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-        ]
-    ),
-    Plan(
-        date:DateTime(2023,4,20,0,0,0,0,0) ,
-        uId:'ssss',
-        play: [
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-        ]
-    ),
-    Plan(
-        date:DateTime(2023,4,20,0,0,0,0,0) ,
-        uId:'ssss',
-        play: [
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-        ]
-    ),
-    Plan(
-        date:DateTime(2023,4,20,0,0,0,0,0) ,
-        uId:'ssss',
-        play: [
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-        ]
-    ),
-    Plan(
-        date:DateTime(2023,4,20,0,0,0,0,0) ,
-        uId:'ssss',
-        play: [
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-        ]
-    ),
-  ];
 }
