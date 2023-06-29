@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:blackgymcoach/modules/changeLanuage.dart';
+import 'package:blackgymcoach/modules/gym.dart';
 import 'package:blackgymcoach/modules/login_register/cubit/authentication_cubit.dart';
 import 'package:blackgymcoach/modules/login_register/homeSignup.dart';
 import 'package:blackgymcoach/shared/app_cubit/cubit.dart';
@@ -14,6 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import 'shared/styles/colors_manager.dart';
+
 
 Future<void> main() async {
 
@@ -24,37 +27,28 @@ Future<void> main() async {
   await CacheHelper.init();
   // bool? onBoarding = CacheHelper.getDataIntoShPre(key: 'Onboarding');
   // uId = CacheHelper.getDataIntoShPre(key: 'uId');
-  var lang = CacheHelper.getDataIntoShPre(key: 'Lang');
-
-
-  if (lang != null) {
-    lang = lang;
-  } else {
-    lang = 'en';
-  }
+  var token = CacheHelper.getDataIntoShPre(key: 'token');
   late Widget widget;
-  if (uId != null) {
+  if (token != null) {
+      widget = AnimatedSplashScreen(
+        splashIconSize: 160,
+        duration: 4000,
+        splashTransition: SplashTransition.fadeTransition,
+        backgroundColor: ColorsManager.primary,
+        nextScreen:  NewLayout(),
+        splash:SvgPicture.asset(
+            'assets/images/Logo.svg'
+        ),
+      );
+      } else {
     widget = AnimatedSplashScreen(
-      splashIconSize: 130,
+      splashIconSize: 160,
       duration: 4000,
       splashTransition: SplashTransition.fadeTransition,
-      backgroundColor: Colors.white60,
-      nextScreen: const HomeSignUpScreen(),
+      backgroundColor: ColorsManager.primary,
+      nextScreen:  HomeSignUpScreen(),
       splash:SvgPicture.asset(
-        'assets/images/popcorn-svgrepo-com.svg',
-        alignment: AlignmentDirectional.center,
-      ),
-    );
-  } else {
-    widget =  AnimatedSplashScreen(
-      splashIconSize: 130,
-      duration: 4000,
-      splashTransition: SplashTransition.fadeTransition,
-      backgroundColor: Colors.grey.shade900,
-      nextScreen: const HomeSignUpScreen(),
-      splash:SvgPicture.asset(
-        'assets/images/popcorn-svgrepo-com.svg',
-        alignment: AlignmentDirectional.center,
+          'assets/images/Logo.svg'
       ),
     );
   }
@@ -72,24 +66,21 @@ Future<void> main() async {
   runApp(MyApp(
     //appRouter: AppRouter()
     startWidget: widget,
-    lang: lang,
   ));
 }
 
 class MyApp extends StatelessWidget {
 //  final AppRouter appRouter;
 final Widget? startWidget;
-final String lang;
 const MyApp({Key? key,
 required this.startWidget,
-required this.lang
 }) : super(key: key);
 // This widget is the root of your application.
 @override
 Widget build(BuildContext context) {
   return MultiBlocProvider(
     providers: [
-      BlocProvider(create:(context) => GymCubit()..changeLanguage(languageCode: lang)),
+      BlocProvider(create:(context) => GymCubit()..changeLanguage(languageCode: "en")),
       BlocProvider(create:(context) => AuthCubit()),
      //..createDatabase()),
 
@@ -98,7 +89,7 @@ Widget build(BuildContext context) {
       listener: (context, state) {},
       builder:(context, state) {
         return MaterialApp(
-          locale: GymCubit.get(context).lang =="en" ? const Locale("en"):const Locale("ar"),
+          locale: GymCubit.get(context).lang =="en" ? const Locale("en"):const Locale("en"),
           supportedLocales: const [
             Locale("en"),
             Locale("ar"),

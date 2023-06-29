@@ -26,6 +26,26 @@ void showProgressIndicator(BuildContext  context)
     return alertDialog;
   });
 }
+void showErrorMassage(BuildContext  context)
+{
+  AlertDialog alertDialog = AlertDialog(
+    backgroundColor: Colors.grey,
+    elevation: 0,
+    content: Center(child:Text('There is problem with fetching data right now ',
+    style: TextStyle(color: ColorsManager.primary,fontWeight: FontWeight.bold,fontSize: 18,)) ,),
+  );
+
+  showDialog(
+      barrierColor: Colors.white.withOpacity(0),
+      barrierDismissible: false,
+      context: context, builder: (context)
+  {
+    return alertDialog;
+  });
+}
+
+
+
 /**
     import 'package:blackgym/shared/styles/colors_manager.dart';
     import 'package:blackgym/shared/styles/string_manager.dart';

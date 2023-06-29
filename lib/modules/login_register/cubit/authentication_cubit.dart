@@ -1,6 +1,8 @@
 
 
+import 'package:blackgymcoach/model/model/authentication/login.dart';
 import 'package:blackgymcoach/shared/network/constants.dart';
+import 'package:blackgymcoach/shared/network/local/cache_helper.dart';
 import 'package:blackgymcoach/shared/network/remote/dio_helper.dart';
 import 'package:blackgymcoach/shared/styles/colors_manager.dart';
 import 'package:blackgymcoach/shared/styles/iconly_broken.dart';
@@ -97,21 +99,22 @@ import 'authentication_states.dart';
 
   ///========= otp message =========///
   late String verificationId;
+  LoginModel? loginModel;
   void userLogin({
-    required String email,
-    required String password,
+    required String? email,
+    required String? password,
   }) async {
     emit(LoginLoadingState());
     print('11111111111111');
-    DioHelper.postData(
-        url: login,
-        data: {
-          'email': email,
-          'password': password,
-        }
-    ).then((value) {
+    DioHelper.postData(url: login, data: {
+      'email': email,
+      'password': password,
+    }).then((value) {
       print('22222222');
-      print(value.data);
+      loginModel = LoginModel.fromJson(value.data);
+      //userModel =UserModel.fromJson(value.data);
+      //print(userModel);
+      CacheHelper.saveData(key: "token", value: loginModel?.data?.id);
       emit(LoginSuccessState());
     }).catchError((error) {
       print('3333333333');

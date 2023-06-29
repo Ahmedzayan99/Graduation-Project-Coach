@@ -12,10 +12,8 @@ import 'Search.dart';
 class NewLayout extends StatelessWidget {
   final GlobalKey<ScaffoldState>_key = GlobalKey();
   NewLayout({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context)  {
-
     return BlocBuilder <GymCubit,GymStates>(
       builder:(context, state) {
        GymCubit cubit = GymCubit.get(context);
@@ -33,12 +31,13 @@ class NewLayout extends StatelessWidget {
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
            floatingActionButton: FloatingActionButton(
         onPressed: () {
+          GymCubit.get(context).getAllUserData();
           Navigator.push(context, MaterialPageRoute(builder: (context) =>  SearchScreen(),));
 
 
         },
-        child: Icon(Icons.search_sharp),),
-           bottomNavigationBar: BottomAppBar(
+        child: Icon(Icons.person),),
+           bottomNavigationBar:BottomAppBar(
         color: Color.fromRGBO(65, 65, 65, 1),
         shape: CircularNotchedRectangle(),
         notchMargin: 5.0,clipBehavior: Clip.antiAliasWithSaveLayer,

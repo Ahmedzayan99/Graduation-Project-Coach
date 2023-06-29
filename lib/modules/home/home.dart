@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                           SizedBox(height: 40.0,),
                           Padding(
                             padding: EdgeInsetsDirectional.only(start: 40.0,),
-                            child: Text( " Never give\n  Up lose \nweigh build ",
+                            child: Text( "Never give up\nLose weight, Build muscles.",
                               maxLines: 4,
                               style: const TextStyle(
                                 fontSize: 32.0,
@@ -59,8 +59,6 @@ class HomeScreen extends StatelessWidget {
 
   }
 }
-
-
 
 class MyCustomPainter extends CustomPainter {
   @override

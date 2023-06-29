@@ -1,7 +1,11 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, unnecessary_null_comparison, prefer_if_null_operators, avoid_types_as_parameter_names
 
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:blackgymcoach/model/model/coach_model.dart';
+import 'package:blackgymcoach/model/model/muscles/all_user.dart';
+import 'package:blackgymcoach/model/model/muscles/only_muscle.dart';
 import 'package:blackgymcoach/model/model/user_model.dart';
 import 'package:blackgymcoach/modules/home/home.dart';
 import 'package:blackgymcoach/modules/settings/settings.dart';
@@ -16,6 +20,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class GymCubit extends Cubit<GymStates> {
   GymCubit() : super(GymInitialState());
 
+ get index => null;
+
   static GymCubit get(context) => BlocProvider.of(context);
 
   //<<<<<<<<<<<<<<<<<Start the cubit of BottomNavigationBar >>>>>>>>>>>>>>>>>>>>>>
@@ -25,17 +31,21 @@ class GymCubit extends Cubit<GymStates> {
     SettingsScreen(),
   ];
   void changeIndex(int index) {
-    if (index == 4) {
+    if (index == 1) {
+      getCoashData();
  //     getUserData();
     }
-
     current = index;
     emit(GymChangeBottomNavBarState());
   }
 
   //<<<<<<<<<<<<<<<<<Start the cubit of page Setting >>>>>>>>>>>>>>>>>>>>>>
-  bool myProfile = false;
 
+  void changeselected() {
+
+  }
+
+  bool myProfile =false;
   void changeBottomProfile() {
     myProfile = !myProfile;
     emit(GymChangeProfileState());
@@ -53,6 +63,13 @@ class GymCubit extends Cubit<GymStates> {
   void RatingBottomLanguage() {
     Rating = !Rating;
     emit(GymChangeLanguageState());
+  }
+
+  bool addplanWidget = false;
+
+  void AddPlanWidget() {
+    addplanWidget = !addplanWidget;
+    emit( GymAddPlanWedgitState());
   }
 
   bool ourBranch = false;
@@ -320,18 +337,158 @@ class GymCubit extends Cubit<GymStates> {
     emit(ChangeBottomSheetState());
   }
 
-  UserModel? userModel;
-  Future<void> getUserData() async {
+   UserModel? userModel;
+  Future<void> getUserData({
+  required int id ,
+}) async {
     emit(GetUserLoadingState());
-    await DioHelper.getData(url: user)
+    await DioHelper.getData(url:user.oneUser(id:id))
         .then((value) {
-      userModel = UserModel.fromJson(value.data);
+      userModel = UserModel.fromJson(value.data!);
       emit(GetUserSuccessState());
     })
         .catchError((error) {
       emit(GetUserErrorState(error: error.toString()),);
       print(error.toString());
     });
+  }
+
+
+  AllUser? allUser;
+  Future<void> getAllUserData() async {
+    emit(GetAllUserLoadingState());
+    await DioHelper.getData(url: alluser)
+       .then((value) {
+       allUser = AllUser.fromJson(value.data);
+      emit(GetAllUserSuccessState());
+    })
+        .catchError((error) {
+      emit(GetAllUserErrorState(error.toString()));
+    });
+  }
+
+  CoachModel? coashModel;
+  Future<void> getCoashData(
+  // required int id
+  ) async {
+    emit(GetCoachLoadingState());
+    await DioHelper.getData(url: user.oneUser(id: CacheHelper.getDataIntoShPre(key:'token')))
+        .then((value) {
+      coashModel = CoachModel.fromJson(value.data);
+      emit(GetCoachSuccessState());
+    }).catchError((error){
+      emit(GetCoachErrorState(error: error));
+    });
+  }
+/*;
+    await DioHelper.getData(url: user)
+        .then((value) {
+      userModel = UserModel.fromJson(value.data);
+      emit(GetUserSuccessState());
+    })*//*
+
+        .catchError((error) {
+      emit(GetUserErrorState(error: error.toString()),);
+      print(error.toString());
+    });
+  }
+
+
+*/
+
+  List<String> dropDownButtonselectedDay = [
+    'saturday',
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+  ];
+  String Day = 'sunday';
+  Future<void> selectedDay({required String dayCode}) async {
+    if (dayCode.isNotEmpty) {
+      lang = dayCode;
+    } else {
+      lang = lang;
+    }
+    emit(ChangeAppModeState());
+
+  }
+
+  OnlyMucsleModel? onlyMucsleModel;
+  Future<void> getOnlyMuscles(
+      //  required int? id,
+      ) async {
+    emit(GetOnlyMusclesLoading());
+    await  DioHelper.getData(url:alllexercises)
+        .then((value) {
+      onlyMucsleModel = OnlyMucsleModel.fromJson(value.data);
+      // final items =onlyMucsleModel!.data![index] as dynamic;
+      //   final filteritem =items!.where((items) => items['id']=='4').toList();
+      //   print('ffffiiiilllll${filteritem}');
+      emit(GetOnlyMusclesSuccess());
+    })
+        .catchError((error) {
+      emit(GetOnlyMusclesError(error: error.toString()));
+    });
+
+   /* RegisterModel? registerModel;
+    void createUser({
+      required String name,
+      required String email,
+      required String password,
+      required String phoneNumber,
+    }){
+      emit(CreateUserLoadingState());
+      DioHelper.postData(url:register , data: {
+        "name":name,
+        "email":email,
+        "password":password.toString(),
+        "phone_number":phoneNumber.toString(),
+        "height":heightInitial.toString(),
+        "weight":weightInitial.toString(),
+        "age":ageInitial.toString(),
+        "fat_percentage":fatPercentageInitial.toString(),
+      }).then((value) {
+        print("111111111111");
+        print("111111111111");
+        registerModel = RegisterModel.fromJson(value.data);
+        print("2222222222222");
+        emit(CreateUserSuccessState(successMessage: registerModel!.message));
+        userLogin(email:email,password: password );
+      }).catchError((error){
+        print('CreateUserErrorState$error');
+        emit(CreateUserErrorState(error.toString()));
+      });
+    }*/
+
+
+  }
+
+
+  Future<void> addPlan(
+     {
+  required int userId,
+  required String day,
+  required List<String> exercises,
+  required List<String> muscles,
+}
+      ) async {
+    emit(addPlanLoading());
+   await DioHelper.postData(url:addplan, data:
+       {
+         "user_id":userId,
+         "day":'$day',
+         "exercises":exercises,
+         "muscles":muscles,
+       }
+       ).then((value) {
+     emit(addPlanSuccess());
+
+   }).catchError((error){
+     emit(addPlanError(error: error));
+   });
   }
 
 

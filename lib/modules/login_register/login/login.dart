@@ -185,17 +185,13 @@ class LoginScreen extends StatelessWidget {
                             shape: const StadiumBorder(),
                             color: ColorsManager.primary,
                             onPressed:() {
-                              Navigator.pushAndRemoveUntil(context,
-                                  MaterialPageRoute(builder: (context) =>  NewLayout(),), (route) => false);
-                          /*    if(_formKey.currentState!.validate())
+
+                             if(_formKey.currentState!.validate())
                               {
-                                //  cubit.userLogin(
-                                //  email: userNameController.text,
-                                //password: passController.text,
-                                // );
-                                cubit.userLogin(email: userNameController.text.trim(),
+                                cubit.userLogin(
+                                email: userNameController.text.trim(),
                                   password: passController.text.trim(),);
-                              }*/
+                              }
                             },
                             child:  Text("${'logIn'.tr(context)}",
                                 style: TextStyle(
@@ -207,7 +203,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20.0,),
-                        Row(
+                       /* Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -222,7 +218,7 @@ class LoginScreen extends StatelessWidget {
                             TextButton(
                                 onPressed: () {
                                   Fluttertoast.showToast(
-                                    msg: "If you don't have an account, you can now visit us to create an account for you",
+                                    msg: "This app belongs to BLACK GYM, and no one can register in it unless it has been added by our administrator. To register, you must visit us at our branches.",
                                     backgroundColor: Colors.black,
                                     textColor: ColorsManager.primary,
                                   );
@@ -236,7 +232,7 @@ class LoginScreen extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                     ))),
                           ],
-                        ),
+                        ),*/
                       ],
                     ),
                   ),

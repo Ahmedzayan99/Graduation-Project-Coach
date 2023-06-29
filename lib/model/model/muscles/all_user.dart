@@ -1,14 +1,11 @@
-class UserModel {
+class AllUser {
   bool? status;
   Users? users;
-
-  UserModel({this.status, this.users});
-
-  UserModel.fromJson(Map<String, dynamic> json) {
+  AllUser({this.status, this.users});
+  AllUser.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    users = json['users'] != null ? new Users.fromJson(json['users']) : null;
+    users = json['users'] != null ?  Users.fromJson(json['users']) : null;
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
@@ -20,6 +17,26 @@ class UserModel {
 }
 
 class Users {
+  List<Data>? data;
+  Users({this.data});
+  Users.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Data {
   int? id;
   String? name;
   String? email;
@@ -34,9 +51,9 @@ class Users {
   String? createdAt;
   String? updatedAt;
   String? type;
+  String? membership;
   List<Rate>? rate;
-
-  Users(
+  Data(
       {this.id,
         this.name,
         this.email,
@@ -51,9 +68,10 @@ class Users {
         this.createdAt,
         this.updatedAt,
         this.type,
+        this.membership,
         this.rate});
 
-  Users.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
@@ -68,6 +86,7 @@ class Users {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     type = json['type'];
+    membership = json['membership'];
     if (json['rate'] != null) {
       rate = <Rate>[];
       json['rate'].forEach((v) {
@@ -92,6 +111,7 @@ class Users {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['type'] = this.type;
+    data['membership'] = this.membership;
     if (this.rate != null) {
       data['rate'] = this.rate!.map((v) => v.toJson()).toList();
     }

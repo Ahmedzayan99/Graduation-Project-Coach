@@ -1,5 +1,9 @@
+import 'dart:ui';
+
+import 'package:blackgymcoach/model/model/muscles/only_muscle.dart';
 import 'package:blackgymcoach/shared/app_cubit/cubit.dart';
 import 'package:blackgymcoach/shared/app_cubit/states.dart';
+import 'package:blackgymcoach/shared/components.dart';
 import 'package:blackgymcoach/shared/global/app_localization/app_localization.dart';
 import 'package:blackgymcoach/shared/styles/colors_manager.dart';
 import 'package:blackgymcoach/shared/styles/iconly_broken.dart';
@@ -8,87 +12,307 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProfileUserScreen extends StatelessWidget {
+class ProfileUserScreen extends StatefulWidget {
    ProfileUserScreen({super.key});
+
+  @override
+  State<ProfileUserScreen> createState() => _ProfileUserScreenState();
+}
+
+class _ProfileUserScreenState extends State<ProfileUserScreen> {
   final _formKey = GlobalKey<FormState>();
+  List<int> selectedIndexes=[];
+  List<String> idExer=[];
+  List<String> dropDownButton = [
+    'saturday',
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+  ];
+  String day = 'sunday';
+  Future<void> selectedDay({required String dayCode}) async {
+    if (dayCode.isNotEmpty) {
+      day = dayCode;
+    } else {
+      day = day;
+    }
+  }
+ /*  void showProgressIndicator(OnlyMucsleModel modelExercises, context)
+   {
+     AlertDialog alertDialog =   AlertDialog(
+       backgroundColor: ColorsManager.grey,
+       actions: [
+         Expanded(
+           child: Padding(
+             padding: const EdgeInsets.only(left: 8.0,right: 8.0),
+             child: Row(
+               children: [
+                 Container(
+                   height: 36.0,
+    //       clipBehavior: Clip.antiAliasWithSaveLayer,
+                   decoration: BoxDecoration(
+                     color:  ColorsManager.primary,
+                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                   ),
+                   child: Padding(
+                     padding: const EdgeInsets.only(left: 9.0),
+                     child: DropdownButton(
+                       style: TextStyle(color: Colors.white),
+       // style: TextStyle(color: Colors.pink),
+                     iconEnabledColor: Colors.white,
+                     value:day,
+                     dropdownColor: Colors.blue,
+                     borderRadius: BorderRadius.all(Radius.circular(20),),
+                       items:dropDownButton.map((String items)
+                       {
+                         return  DropdownMenuItem(
+                           child: Text(items.toUpperCase()),
+                           value: items,
+                         );
+                       }) .toList() ,
+                       onChanged: (value) {
+                         setState(() {
+                           selectedDay(dayCode: value!);
+                           print(value);
+                             Navigator.pop(context);
+                             showProgressIndicator(modelExercises, context);
+
+                          // Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder:(context)=> ProfileUserScreen()), (route) => false);
+                   //        Navigator.push(context, MaterialPageRoute(builder: (context) =>  ProfileUserScreen()));
+                      //     showProgressIndicator(modelExercises, context);
+                         });
+                       },
+                     ),
+                   ),
+                 ),
+                 SizedBox(width: 60.0,),
+                 Expanded(
+                   child: MaterialButton(
+                       padding: EdgeInsets.all(0),
+                       onPressed: () {
+                         Navigator.pop(context);
+                         Navigator.push(context, MaterialPageRoute(builder: (context) =>  ProfileUserScreen(),));
+
+
+                       },
+                       color: ColorsManager.primary,
+                       child: Row(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: [
+                           Text('ADD',style: TextStyle(
+                               color: Colors.white,
+
+                           )),
+                           Icon(Icons.add,color: Colors.white,),
+                         ],
+                       )),
+                 )
+               ],
+             ),
+           ),
+         ),
+
+       ],
+       icon: Row(
+         children: [
+           Text('Add a plan ',
+             style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,
+                 color: Colors.red),),
+           Icon(IconlyBroken.exercise_1,color: Colors.black),
+         ],
+       ),
+       actionsAlignment: MainAxisAlignment.start,
+       buttonPadding: EdgeInsets.all(0),
+       scrollable: true,
+       //elevation: 70.0,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+       content:Container(
+         child: Column(
+           crossAxisAlignment: CrossAxisAlignment.start,
+           mainAxisAlignment: MainAxisAlignment.start,
+           children: [
+             ListView.separated(
+               shrinkWrap: true,
+               physics: BouncingScrollPhysics(),
+               scrollDirection: Axis.vertical,
+               itemBuilder:(context, index){
+
+                 return ListTile(
+                 title: Row(
+                   children: [
+                     Container(
+                       width: 90.0,
+                       height: 90.0,
+                       decoration: BoxDecoration(
+                         *//* border: Border.all(
+                             color: const Color.fromRGBO(
+                                 248, 202, 89, 0.6470588235294118),
+                             width: 1.5,
+                             style: BorderStyle.solid),*//*
+                         borderRadius: BorderRadius.circular(20.0),
+                         image: DecorationImage(
+                           image: NetworkImage('${modelExercises.data![index].image}'),
+                           fit: BoxFit.fill,),
+
+                       ),
+                     ),
+                     const SizedBox(width: 10.0,),
+                     Expanded(
+                       child: Padding(
+                         padding: const EdgeInsets.only(top: 5.0),
+                         child: Text('${modelExercises.data![index].name}',
+                           maxLines: 2,
+                           //overflow: TextOverflow.fade,
+                           style: const TextStyle(
+                             color: Color.fromRGBO(251, 251, 251, 1),
+                             fontWeight: FontWeight.bold,
+                             fontSize: 18,
+                           ),),
+                       ),
+                     ),
+                   ],
+                 ),
+                 tileColor: selectedIndexes.contains(index)?Colors.blue:Colors.transparent,
+                 shape:OutlineInputBorder(borderSide: BorderSide.none,borderRadius: BorderRadius.all(Radius.circular(20))),
+
+                 onTap: () {
+                   setState(() {
+                     if(selectedIndexes.contains(index)){
+                       selectedIndexes.remove(index);
+                       idExer.remove('${modelExercises.data![index].id}');
+                     }
+                     else{
+                       selectedIndexes.add(index);
+                       idExer.add('${modelExercises.data![index].id}');
+                     }
+                     Navigator.pop(context);
+                     showProgressIndicator(modelExercises, context);
+                     print(selectedIndexes);
+                     print(idExer);
+                   });
+                 },
+               );},
+               separatorBuilder: (context, index) => Column(children: [
+                 SizedBox(height: 5.0,),
+                 Container(
+                   width: double.infinity,
+                   height: 0.2,
+                   color: Colors.grey[300],
+                 ),
+                 SizedBox(height: 5.0,),
+
+               ],),
+               itemCount: modelExercises.data!.length,
+             )
+
+           ],
+         ),
+       ),
+     );
+     showDialog(
+         barrierColor: Colors.white.withOpacity(0),
+         barrierDismissible: true,
+         context: context, builder: (context)
+
+     {
+       return alertDialog;
+     });
+   }
+*/
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GymCubit, GymStates>(
-      listener: (context, state) {},
-    builder: (context, state) {
-       var userModel = GymCubit.get(context).userModel;
-      return Scaffold(
-          appBar: AppBar(
-            /*  title: IconButton(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => NewLayout()));
-            }, icon: Icon(IconlyBroken.back)),*/
-          ),
-          body:SingleChildScrollView(
-            child: Padding(
-               padding: const EdgeInsetsDirectional.only(top:0,start:5,end:5,bottom: 15.0),
-              child: Column(
-                children: [
-                  SizedBox(
-                height: 210.0,
-                    child: Stack(
-                      alignment: AlignmentDirectional
-                          .bottomCenter,
+        listener: (context, state) {
+          if (State is GetUserLoadingState) {
+            return showProgressIndicator(context);
+          }
+          if (State is GetUserErrorState) {
+            return showErrorMassage(context);
+          }
+        },
+        builder: (context, state) {
+          var userModel = GymCubit.get(context).userModel;
+          var onlyMucsleModel = GymCubit.get(context).onlyMucsleModel;
+          if (GymCubit.get(context).userModel == null) {
+            return defaultProgressIndicator();
+          }
+          else {
+            return  Scaffold(
+                appBar: AppBar(),
+                body:SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.only(top:0,start:5,end:5,bottom: 15.0),
+                    child: Column(
                       children: [
-                         Align(
-                          alignment:
-                          AlignmentDirectional
-                              .topStart,
-                          child: SizedBox(
-                              height: 160.0,
-                              width: double.infinity,
-                              //   width: double.infinity,
-                              child: Container(
-                                decoration: const BoxDecoration(borderRadius:BorderRadius.all(Radius.circular(10))),
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/gym.jpg'),
-                                  fit: BoxFit.cover,
+                        SizedBox(
+                          height: 210.0,
+                          child: Stack(
+                            alignment: AlignmentDirectional
+                                .bottomCenter,
+                            children: [
+                              Align(
+                                alignment:
+                                AlignmentDirectional
+                                    .topStart,
+                                child: SizedBox(
+                                  height: 160.0,
+                                  width: double.infinity,
+                                  //   width: double.infinity,
+                                  child: Container(
+                                    decoration: const BoxDecoration(borderRadius:BorderRadius.all(Radius.circular(10))),
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    child: Image(
+                                      image: AssetImage(
+                                          'assets/images/gym.jpg'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
                               ),
+                              CircleAvatar(
+                                radius: 55.0,
+                                backgroundColor:
+                                ColorsManager.primary,
+                                child: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      '${userModel?.users!.imageUrl}'),
+                                  radius: 50.0,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        CircleAvatar(
-                          radius: 55.0,
-                          backgroundColor:
-                          ColorsManager.primary,
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                '${userModel?.data!.imageUrl}'),
-                            radius: 50.0,
+                        const SizedBox(
+                          height: 15.0,
+                        ),
+                        Text(
+
+                          '${userModel?.users!.name}',
+                          style: const TextStyle(
+                            color: Color.fromRGBO(
+                                251, 251, 251, 1),
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
-                  Text(
-                    '${userModel?.data!.name}',
-                    style: const TextStyle(
-                      color: Color.fromRGBO(
-                          251, 251, 251, 1),
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
-                  Container(
-                    height:50.0,
-                    child: Expanded(
-                      child:Row(
-                        /*     mainAxisAlignment: MainAxisAlignment.start,
+                        const SizedBox(
+                          height: 15.0,
+                        ),
+                        Container(
+
+                          height:50.0,
+                          child: Expanded(
+
+                            child:Row(
+
+                              /*     mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,*/
-                        children: [
-                        /*  Expanded(
+                              children: [
+
+                                /*  Expanded(
                             child: Column(
                               children: [
                                 Text(
@@ -120,178 +344,182 @@ class ProfileUserScreen extends StatelessWidget {
                             ),
                           ),
 */
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Fat",
-                                  maxLines: 1,
-                                  style:  TextStyle(
-                                      color: ColorsManager.primary,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10.0,
-                                ),
-                                /*  const SizedBox(
+                                Expanded(
+
+                                  child: Column(
+                                    children: [
+
+                                      Text(
+                                        "Fat",
+                                        maxLines: 1,
+                                        style:  TextStyle(
+                                            color: ColorsManager.primary,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      /*  const SizedBox(
                                   width: 20.0,
                                 ),*/
-                                Align(
-                                  alignment:AlignmentDirectional.center,
-                                  child: Text(
-                                    '${userModel?.data!.fatPercentage}',
-                                    style: const TextStyle(
-                                      inherit: true,
-                                      color: Color.fromRGBO(
-                                          251, 251, 251, 1),
-                                      fontSize: 14.0,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                                      Align(
 
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Text(
-                                  "${'height'.tr(context)}",
-                                  maxLines: 1,
-                                  style:  TextStyle(
-                                      color: ColorsManager.primary,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold
+                                        alignment:AlignmentDirectional.center,
+                                        child: Text(
+
+                                          '${userModel?.users!.fatPercentage}',
+                                          style: const TextStyle(
+                                            inherit: true,
+                                            color: Color.fromRGBO(
+                                                251, 251, 251, 1),
+                                            fontSize: 14.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 10.0,
-                                ),
-                                /*  const SizedBox(
+
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "${'height'.tr(context)}",
+                                        maxLines: 1,
+                                        style:  TextStyle(
+                                            color: ColorsManager.primary,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      /*  const SizedBox(
                                   width: 20.0,
                                 ),*/
-                                Align(
-                                  alignment:AlignmentDirectional.center,
-                                  child: Text(
-                                    '${userModel?.data!.height}',
-                                    style: const TextStyle(
+                                      Align(
+                                        alignment:AlignmentDirectional.center,
+                                        child: Text(
+                                          '${userModel?.users!.height}',
+                                          style: const TextStyle(
 
-                                      inherit: true,
-                                      color: Color.fromRGBO(
-                                          251, 251, 251, 1),
-                                      fontSize: 14.0,
-                                    ),
+                                            inherit: true,
+                                            color: Color.fromRGBO(
+                                                251, 251, 251, 1),
+                                            fontSize: 14.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
 
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Text(
-                                  "${'weight'.tr(context)}",
-                                  maxLines: 1,
-                                  style:  TextStyle(
-                                      color: ColorsManager.primary,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10.0,
-                                ),
-                                /*  const SizedBox(
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "${'weight'.tr(context)}",
+                                        maxLines: 1,
+                                        style:  TextStyle(
+                                            color: ColorsManager.primary,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      /*  const SizedBox(
                                   width: 20.0,
                                 ),*/
-                                Align(
-                                  alignment:AlignmentDirectional.center,
-                                  child: Text(
-                                    '${userModel?.data!.weight}',
-                                    style: const TextStyle(
-                                      inherit: true,
-                                      color: Color.fromRGBO(
-                                          251, 251, 251, 1),
-                                      fontSize: 14.0,
-                                    ),
+                                      Align(
+                                        alignment:AlignmentDirectional.center,
+                                        child: Text(
+                                          '${userModel?.users!.weight}',
+                                          style: const TextStyle(
+                                            inherit: true,
+                                            color: Color.fromRGBO(
+                                                251, 251, 251, 1),
+                                            fontSize: 14.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
 
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Text(
-                                  "${'age'.tr(context)}",
-                                  maxLines: 1,
-                                  style:  TextStyle(
-                                      color: ColorsManager.primary,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10.0,
-                                ),
-                                /*  const SizedBox(
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "${'age'.tr(context)}",
+                                        maxLines: 1,
+                                        style:  TextStyle(
+                                            color: ColorsManager.primary,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      /*  const SizedBox(
                                   width: 20.0,
                                 ),*/
-                                Align(
-                                  alignment:AlignmentDirectional.center,
-                                  child: Text(
-                                    '${userModel?.data!.age}',
-                                    style: const TextStyle(
-                                      inherit: true,
-                                      color: Color.fromRGBO(
-                                          251, 251, 251, 1),
-                                      fontSize: 14.0,
-                                    ),
+                                      Align(
+                                        alignment:AlignmentDirectional.center,
+                                        child: Text(
+                                          '${userModel?.users!.age}',
+                                          style: const TextStyle(
+                                            inherit: true,
+                                            color: Color.fromRGBO(
+                                                251, 251, 251, 1),
+                                            fontSize: 14.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
 
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Text(
-                                  "${'gender'.tr(context)}",
-                                  maxLines: 1,
-                                  style:  TextStyle(
-                                      color: ColorsManager.primary,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10.0,
-                                ),
-                                /*  const SizedBox(
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "${'gender'.tr(context)}",
+                                        maxLines: 1,
+                                        style:  TextStyle(
+                                            color: ColorsManager.primary,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      /*  const SizedBox(
                                   width: 20.0,
                                 ),*/
-                                Align(
-                                  alignment:AlignmentDirectional.center,
-                                  child: Text(
-                                    '${userModel?.data!.gender}',
-                                    style: const TextStyle(
-                                      inherit: true,
-                                      color: Color.fromRGBO(
-                                          251, 251, 251, 1),
-                                      fontSize: 14.0,
-                                    ),
+                                      Align(
+                                        alignment:AlignmentDirectional.center,
+                                        child: Text(
+                                          '${userModel?.users!.gender}',
+                                          style: const TextStyle(
+                                            inherit: true,
+                                            color: Color.fromRGBO(
+                                                251, 251, 251, 1),
+                                            fontSize: 14.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
 
-                 /*       Row(
+                                /*       Row(
                             children: [
                               Text(
                                 "${'gender'.tr(context)}",
@@ -461,57 +689,63 @@ class ProfileUserScreen extends StatelessWidget {
                           const SizedBox(
                             height: 20.0,
                           ),*/
-                        ],),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  Padding(
-                    padding:EdgeInsetsDirectional.only(start:5.0,end: 5.0,),
-                    child: Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: MaterialButton(onPressed: () {},
-                            height: 40.0,
-                            color: ColorsManager.primary,
-                              child: Text('Add a Plan',   style: TextStyle(
-                                  color: ColorsManager.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0,
-                              ),
-                              ),
+                              ],),
+                          ),
                         ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        Padding(
+                          padding:EdgeInsetsDirectional.only(start:5.0,end: 5.0,),
+                          child: Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                GymCubit.get(context).addplanWidget?SizedBox(): Expanded(
+                                  child: MaterialButton(onPressed: () {
+                                    GymCubit.get(context).getOnlyMuscles().then((value) {
+                                      //     showProgressIndicator(onlyMucsleModel! ,context);
+                                      GymCubit.get(context).AddPlanWidget();
+                                    });
+
+                                  },
+                                    height: 40.0,
+                                    color: ColorsManager.primary,
+                                    child: Text('Add a Plan',   style: TextStyle(
+                                      color: ColorsManager.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0,
+                                    ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width:12.0 ,),
+                                GymCubit.get(context).Rating?SizedBox():Expanded(
+                                  child: MaterialButton(onPressed: () {
+                                    if(GymCubit.get(context).Rating==false){
+                                      GymCubit.get(context).RatingBottomLanguage();
+                                    }
+                                    else if (_formKey.currentState!.validate())
+                                    {
+                                      GymCubit.get(context).RatingBottomLanguage();
+                                    };
+                                  },
+                                    height: 40.0,
+                                    color: ColorsManager.primary,
+                                    child: Text(' Add a Rating',
+                                      style: TextStyle(
+                                        color: ColorsManager.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          SizedBox(width:12.0 ,),
-                          Expanded(
-                            child: MaterialButton(onPressed: () {
-                              if(GymCubit.get(context).Rating==false){
-                                GymCubit.get(context).RatingBottomLanguage();
-                              }
-                              else if (_formKey.currentState!.validate())
-                              {
-                                GymCubit.get(context).RatingBottomLanguage();
-                              };
-                            },
-                                height: 40.0,
-                                color: ColorsManager.primary,
-                              child: Text(' Add a Rating',
-                                style: TextStyle(
-                                  color: ColorsManager.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0,
-                              ),
-                              ),
-                          ),
-                          ),
-                    ],
-                    ),
-                  ),
-                  /*    Row(
+                          /*    Row(
                                           crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                           mainAxisAlignment:
@@ -542,453 +776,688 @@ class ProfileUserScreen extends StatelessWidget {
                                             ),
                                           ],
                                         ),*/
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  GymCubit.get(context).Rating?Rating(context):const SizedBox(
-                    height: 20.0,
-                  ),
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        GymCubit.get(context).addplanWidget?Container(
+                          decoration: BoxDecoration(
+                            //color: Colors.grey,
+                            border: Border.all(color:ColorsManager.primary,),
+                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            //  backgroundBlendMode: BlendMode.color,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text('Add a plan ',
+                                      style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,
+                                          color: Colors.red),),
+                                    Icon(IconlyBroken.exercise_1,color: Colors.red),
+                                  ],
+                                ),
+                                SizedBox(height: 10.0,),
+                                ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  itemBuilder:(context, index){
+                                    return ListTile(
+                                      title: Row(
+                                        children: [
+                                          Container(
+                                            width: 90.0,
+                                            height: 90.0,
+                                            decoration: BoxDecoration(
+                                              /* border: Border.all(
+                               color: const Color.fromRGBO(
+                                   248, 202, 89, 0.6470588235294118),
+                               width: 1.5,
+                               style: BorderStyle.solid),*/
+                                              borderRadius: BorderRadius.circular(20.0),
+                                              image: DecorationImage(
+                                                image: NetworkImage('${onlyMucsleModel!.data![index].image}'),
+                                                fit: BoxFit.fill,),
 
-                    ],
-              ),
-            ),
-          )
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10.0,),
+                                          Expanded(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(top: 5.0),
+                                              child: Text('${onlyMucsleModel!.data![index].name}',
+                                                maxLines: 2,
+                                                //overflow: TextOverflow.fade,
+                                                style: const TextStyle(
+                                                  color: Color.fromRGBO(251, 251, 251, 1),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                ),),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      tileColor: selectedIndexes.contains(index)?ColorsManager.primary:Colors.grey,
+                                      shape:OutlineInputBorder(borderSide: BorderSide.none,borderRadius: BorderRadius.all(Radius.circular(20))),
+
+                                      onTap: () {
+                                        setState(() {
+                                          if(selectedIndexes.contains(index)){
+                                            selectedIndexes.remove(index);
+                                            idExer.remove('${onlyMucsleModel!.data![index].id}');
+                                          }
+                                          else{
+                                            selectedIndexes.add(index);
+                                            idExer.add('${onlyMucsleModel!.data![index].id}');
+                                          }
+                                          //     Navigator.pop(context);
+                                          //    showProgressIndicator(onlyMucsleModel!, context);
+                                          print(selectedIndexes);
+                                          print(idExer);
+                                        });
+                                      },
+                                    );},
+                                  separatorBuilder: (context, index) => Column(children: [
+                                    SizedBox(height: 5.0,),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 0.2,
+                                      color: Colors.grey[300],
+                                    ),
+                                    SizedBox(height: 5.0,),
+
+                                  ],),
+                                  itemCount: onlyMucsleModel!.data!.length,
+                                ),
+                                Row(children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 8.0,right: 8.0),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            height: 36.0,
+                                            //       clipBehavior: Clip.antiAliasWithSaveLayer,
+                                            decoration: BoxDecoration(
+                                              color:  ColorsManager.primary,
+                                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 9.0),
+                                              child: DropdownButton(
+                                                style: TextStyle(color: Colors.white),
+                                                // style: TextStyle(color: Colors.pink),
+                                                iconEnabledColor: Colors.white,
+                                                value:day,
+                                                dropdownColor: Colors.grey[900],
+                                                borderRadius: BorderRadius.all(Radius.circular(20),),
+                                                items:dropDownButton.map((String items)
+                                                {
+                                                  return  DropdownMenuItem(
+                                                    child: Text(items.toUpperCase(),),
+                                                    value: items,
+                                                  );
+                                                }) .toList() ,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    selectedDay(dayCode: value!);
+                                                    print(value);
+                                                    // Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder:(context)=> ProfileUserScreen()), (route) => false);
+                                                    //        Navigator.push(context, MaterialPageRoute(builder: (context) =>  ProfileUserScreen()));
+                                                    //     showProgressIndicator(modelExercises, context);
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 60.0,),
+                                          Expanded(
+                                            child: MaterialButton(
+                                                padding: EdgeInsets.all(0),
+                                                onPressed: () {
+                                                  GymCubit.get(context).addPlan(
+                                                    userId: 61,
+                                                    day: day,
+                                                    exercises: idExer,
+                                                    muscles: ['1','2'],
+                                                  ).then((value) {
+                                                    GymCubit.get(context).AddPlanWidget();
+                                                  });
+                                                },
+                                                color: ColorsManager.primary,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Text('ADD',style: TextStyle(
+                                                      color: Colors.white,
+
+                                                    )),
+                                                    Icon(Icons.add,color: Colors.white,),
+                                                  ],
+                                                )),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ):const SizedBox(height: 20.0,),
+                        if( GymCubit.get(context).addplanWidget)
+                          if( GymCubit.get(context).Rating)
+                            SizedBox(
+                              height: 30.0,),
+                        GymCubit.get(context).Rating?Rating(context):const SizedBox(
+                          height: 20.0,
+                        ),
+
+                      ],
+                    ),
+                  ),
+                )
+            );
+          }
 
 
-        );
-    }
+        }
     );
   }
+
 Widget Rating (context) =>Form(
   key:_formKey ,
   child:   Container(
-
-    child: Column(
-
-      children: [
-
-        Row(
-
-          /*mainAxisAlignment: MainAxisAlignment.start,
-
-                            crossAxisAlignment: CrossAxisAlignment.start,*/
-
-          children: [
-
-            Expanded(
-
-              child:Column(
-
-                  crossAxisAlignment: CrossAxisAlignment.start,
-
-                  mainAxisAlignment: MainAxisAlignment.center,
-
-                  children: [
-
-                    Text(
-
-                      "Regularity",
-
-                      style: const TextStyle(
-
-                        color: Color.fromRGBO(
-
-                            251, 251, 251, 1),
-
-                        fontSize: 16.0,
-
-                        fontWeight: FontWeight.bold,
-
-                      ),
-
-                    ),
-
-                  ]),
-
-            ),
-
-            Expanded(
-
-              flex: 2,
-
-              child: Column(
-
-                  children: [
-
-                    CustomTextFormFiled(
-
-                      validator: (p0) {
-
-                        if (p0!.isEmpty) {
-
-                          return "${'thisFieldRequired'.tr(context)}";
-
-                        }
-
-                        return null;
-
-                      },
-
-                      textInputType: TextInputType.visiblePassword,
-
-                      hintText: 'Enter from 1 to 10',
-
-                    ),
-
-                  ]),
-
-            ),
-
-
-
-
-
-          ],
-
-        ),
-
-        SizedBox(height: 15.0,),
-
-        Row(
-
-          /*mainAxisAlignment: MainAxisAlignment.start,
-
-                        crossAxisAlignment: CrossAxisAlignment.start,*/
-
-          children: [
-
-            Expanded(
-
-              child:Column(
-
-                  crossAxisAlignment: CrossAxisAlignment.start,
-
-                  mainAxisAlignment: MainAxisAlignment.center,
-
-                  children: [
-
-                    Text(
-
-                      "Feeding",
-
-                      style: const TextStyle(
-
-                        color: Color.fromRGBO(
-
-                            251, 251, 251, 1),
-
-                        fontSize: 16.0,
-
-                        fontWeight: FontWeight.bold,
-
-                      ),
-
-                    ),
-
-                  ]),
-
-            ),
-
-            Expanded(
-
-              flex: 2,
-
-              child: Column(
-
-                  children: [
-
-                    CustomTextFormFiled(
-
-                      validator: (p0) {
-
-                        if (p0!.isEmpty) {
-
-                          return "${'thisFieldRequired'.tr(context)}";
-
-                        }
-
-                        return null;
-
-                      },
-
-                      textInputType: TextInputType.visiblePassword,
-
-                      hintText: 'Enter from 1 to 10',
-
-                    ),
-
-                  ]),
-
-            ),
-
-
-
-
-
-          ],
-
-        ),
-
-        SizedBox(height: 15.0,),
-
-        Row(
-
-          /*mainAxisAlignment: MainAxisAlignment.start,
-
-                        crossAxisAlignment: CrossAxisAlignment.start,*/
-
-          children: [
-
-            Expanded(
-
-              child:Column(
-
-                  crossAxisAlignment: CrossAxisAlignment.start,
-
-                  mainAxisAlignment: MainAxisAlignment.center,
-
-                  children: [
-
-                    Text(
-
-                      "Training",
-
-                      style: const TextStyle(
-
-                        color: Color.fromRGBO(
-
-                            251, 251, 251, 1),
-
-                        fontSize: 16.0,
-
-                        fontWeight: FontWeight.bold,
-
-                      ),
-
-                    ),
-
-                  ]),
-
-            ),
-
-            Expanded(
-
-              flex: 2,
-
-              child: Column(
-
-                  children: [
-
-                    CustomTextFormFiled(
-
-                      validator: (p0) {
-
-                        if (p0!.isEmpty) {
-
-                          return "${'thisFieldRequired'.tr(context)}";
-
-                        }
-
-                        return null;
-
-                      },
-
-                      textInputType: TextInputType.visiblePassword,
-
-                      hintText: 'Enter from 1 to 10',
-
-                    ),
-
-                  ]),
-
-            ),
-
-
-
-
-
-          ],
-
-        ),
-
-        SizedBox(height: 15.0,),
-
-        Row(
-
-          /*mainAxisAlignment: MainAxisAlignment.start,
-
-                        crossAxisAlignment: CrossAxisAlignment.start,*/
-
-          children: [
-
-            Expanded(
-
-              child:Column(
-
-                  crossAxisAlignment: CrossAxisAlignment.start,
-
-                  mainAxisAlignment: MainAxisAlignment.center,
-
-                  children: [
-
-                    Text(
-
-                      "Response",
-
-                      style: const TextStyle(
-
-                        color: Color.fromRGBO(
-
-                            251, 251, 251, 1),
-
-                        fontSize: 16.0,
-
-                        fontWeight: FontWeight.bold,
-
-                      ),
-
-                    ),
-
-                  ]),
-
-            ),
-
-            Expanded(
-
-              flex: 2,
-
-              child: Column(
-
-                  children: [
-
-                    CustomTextFormFiled(
-
-                      validator: (p0) {
-
-                        if (p0!.isEmpty) {
-
-                          return "${'thisFieldRequired'.tr(context)}";
-
-                        }
-
-                        return null;
-
-                      },
-
-                      textInputType: TextInputType.visiblePassword,
-
-                      hintText: 'Enter from 1 to 10',
-
-                    ),
-
-                  ]),
-
-            ),
-
-
-
-
-
-          ],
-
-        ),
-
-        SizedBox(height: 15.0,),
-
-        Row(
-
-          /*mainAxisAlignment: MainAxisAlignment.start,
-
-                        crossAxisAlignment: CrossAxisAlignment.start,*/
-
-          children: [
-
-            Expanded(
-
-              child:Column(
-
-                  crossAxisAlignment: CrossAxisAlignment.start,
-
-                  mainAxisAlignment: MainAxisAlignment.center,
-
-                  children: [
-
-                    Text(
-
-                      "Total",
-
-                      style: const TextStyle(
-
-                        color: Color.fromRGBO(
-
-                            251, 251, 251, 1),
-
-                        fontSize: 16.0,
-
-                        fontWeight: FontWeight.bold,
-
-                      ),
-
-                    ),
-
-                  ]),
-
-            ),
-
-            Expanded(
-
-              flex: 2,
-
-              child: Column(
-
-                  children: [
-
-                    CustomTextFormFiled(
-
-                      validator: (p0) {
-
-                        if (p0!.isEmpty) {
-
-                          return "${'thisFieldRequired'.tr(context)}";
-
-                        }
-
-                        return null;
-
-                      },
-
-                      textInputType: TextInputType.visiblePassword,
-
-                      hintText: 'Enter from 1 to 10',
-
-                    ),
-
-                  ]),
-
-            ),
-
-
-
-
-
-          ],
-
-        ),
-
-
-
-
-
-
-
-
-
-      ],
-
+    decoration: BoxDecoration(
+        color: Colors.grey,
+      borderRadius: BorderRadius.all(Radius.circular(10.0))
+   
     ),
+    child:Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text('Add a Rating ',
+                style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,
+                    color: Colors.red),),
+              Icon(Icons.bar_chart,color: Colors.red),
+            ],
+          ),
+          SizedBox(height: 15.0,),
+          Row(
 
+            /*mainAxisAlignment: MainAxisAlignment.start,
+
+                              crossAxisAlignment: CrossAxisAlignment.start,*/
+
+            children: [
+
+              Expanded(
+
+                child:Column(
+
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+
+                      Text(
+
+                        "Regularity",
+
+                        style: const TextStyle(
+
+                          color: Color.fromRGBO(
+
+                              251, 251, 251, 1),
+
+                          fontSize: 16.0,
+
+                          fontWeight: FontWeight.bold,
+
+                        ),
+
+                      ),
+
+                    ]),
+
+              ),
+
+              Expanded(
+                flex: 2,
+                child: Column(
+                    children: [
+                      CustomTextFormFiled(
+                        validator: (p0) {
+                          if (p0!.isEmpty) {
+                            return "${'thisFieldRequired'.tr(context)}";
+                          }
+                          else if (p0!.length>2) {
+                            return "Enter from 1 to 10";
+                          }
+                          else if(RegExp(r"^[a-zA-Z]").hasMatch(p0))
+                          {
+                            return  "Enter from 1 to 10";
+                          }
+                          else if(RegExp(r"^[0-9]+[1-9]").hasMatch(p0))
+                          {
+                            return  "Enter from 1 to 10";
+                          }
+                          return null;
+
+                        },
+                        textInputType: TextInputType.number,
+                        hintText: 'Enter from 1 to 10',
+
+                      ),
+
+                    ]),
+
+              ),
+
+
+
+
+
+            ],
+
+          ),
+          SizedBox(height: 15.0,),
+          Row(
+
+            /*mainAxisAlignment: MainAxisAlignment.start,
+
+                          crossAxisAlignment: CrossAxisAlignment.start,*/
+
+            children: [
+
+              Expanded(
+
+                child:Column(
+
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+
+                      Text(
+
+                        "Feeding",
+
+                        style: const TextStyle(
+
+                          color: Color.fromRGBO(
+
+                              251, 251, 251, 1),
+
+                          fontSize: 16.0,
+
+                          fontWeight: FontWeight.bold,
+
+                        ),
+
+                      ),
+
+                    ]),
+
+              ),
+
+              Expanded(
+
+                flex: 2,
+
+                child: Column(
+
+                    children: [
+
+                      CustomTextFormFiled(
+
+                        validator: (p0) {
+
+                          if (p0!.isEmpty) {
+                            return "${'thisFieldRequired'.tr(context)}";
+                          }
+                          else if (p0!.length>2) {
+                            return "Enter from 1 to 10";
+                          }
+                          else if(RegExp(r"^[a-zA-Z]").hasMatch(p0))
+                          {
+                            return  "Enter from 1 to 10";
+                          }
+                          else if(RegExp(r"^[0-9]+[1-9]").hasMatch(p0))
+                          {
+                            return  "Enter from 1 to 10";
+                          }
+                          return null;
+
+                        },
+
+                        textInputType: TextInputType.number,
+
+                        hintText: 'Enter from 1 to 10',
+
+                      ),
+
+                    ]),
+
+              ),
+
+
+
+
+
+            ],
+
+          ),
+          SizedBox(height: 15.0,),
+          Row(
+
+            /*mainAxisAlignment: MainAxisAlignment.start,
+
+                          crossAxisAlignment: CrossAxisAlignment.start,*/
+
+            children: [
+
+              Expanded(
+
+                child:Column(
+
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+
+                      Text(
+
+                        "Training",
+
+                        style: const TextStyle(
+
+                          color: Color.fromRGBO(
+
+                              251, 251, 251, 1),
+
+                          fontSize: 16.0,
+
+                          fontWeight: FontWeight.bold,
+
+                        ),
+
+                      ),
+
+                    ]),
+
+              ),
+
+              Expanded(
+
+                flex: 2,
+
+                child: Column(
+
+                    children: [
+
+                      CustomTextFormFiled(
+
+                        validator: (p0) {
+                          if (p0!.isEmpty) {
+                            return "${'thisFieldRequired'.tr(context)}";
+                          }
+                          else if (p0!.length>2) {
+                          return "Enter from 1 to 10";
+                          }
+                              else if(RegExp(r"^[a-zA-Z]").hasMatch(p0))
+                            {
+                            return  "Enter from 1 to 10";
+                            }
+                            else if(RegExp(r"^[0-9]+[1-9]").hasMatch(p0))
+                            {
+                            return  "Enter from 1 to 10";
+                            }
+                            return null;
+
+                        },
+
+                        textInputType: TextInputType.number,
+
+                        hintText: 'Enter from 1 to 10',
+
+                      ),
+
+                    ]),
+
+              ),
+
+
+
+
+
+            ],
+
+          ),
+          SizedBox(height: 15.0,),
+          Row(
+
+            /*mainAxisAlignment: MainAxisAlignment.start,
+
+                          crossAxisAlignment: CrossAxisAlignment.start,*/
+
+            children: [
+
+              Expanded(
+
+                child:Column(
+
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+
+                      Text(
+
+                        "Response",
+
+                        style: const TextStyle(
+
+                          color: Color.fromRGBO(
+
+                              251, 251, 251, 1),
+
+                          fontSize: 16.0,
+
+                          fontWeight: FontWeight.bold,
+
+                        ),
+
+                      ),
+
+                    ]),
+
+              ),
+
+              Expanded(
+
+                flex: 2,
+
+                child: Column(
+
+                    children: [
+
+                      CustomTextFormFiled(
+
+                        validator: (p0) {
+                            if (p0!.isEmpty) {
+                              return "${'thisFieldRequired'.tr(context)}";
+                              }
+                              else if (p0!.length>2) {
+                              return "Enter from 1 to 10";
+                              }
+                              else if(RegExp(r"^[a-zA-Z]").hasMatch(p0))
+                              {
+                              return  "Enter from 1 to 10";
+                              }
+                              else if(RegExp(r"^[0-9]+[1-9]").hasMatch(p0))
+                              {
+                              return  "Enter from 1 to 10";
+                              }
+                              return null;
+                        },
+
+                        textInputType: TextInputType.number,
+
+                        hintText: 'Enter from 1 to 10',
+
+                      ),
+
+                    ]),
+
+              ),
+
+
+
+
+
+            ],
+
+          ),
+          SizedBox(height: 15.0,),
+          Row(
+
+            /*mainAxisAlignment: MainAxisAlignment.start,
+
+                          crossAxisAlignment: CrossAxisAlignment.start,*/
+
+            children: [
+
+              Expanded(
+
+                child:Column(
+
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+
+                      Text(
+
+                        "Total",
+
+                        style: const TextStyle(
+
+                          color: Color.fromRGBO(
+
+                              251, 251, 251, 1),
+
+                          fontSize: 16.0,
+
+                          fontWeight: FontWeight.bold,
+
+                        ),
+
+                      ),
+
+                    ]),
+
+              ),
+
+              Expanded(
+
+                flex: 2,
+
+                child: Column(
+
+                    children: [
+
+                      CustomTextFormFiled(
+
+                        validator: (p0) {
+
+                          if (p0!.isEmpty) {
+                            return "${'thisFieldRequired'.tr(context)}";
+                          }
+                                else if (p0!.length>2) {
+                                return "Enter from 1 to 10";
+                                }
+                                else if(RegExp(r"^[a-zA-Z]").hasMatch(p0))
+                                {
+                                return  "Enter from 1 to 10";
+                                }
+                                else if(RegExp(r"^[0-9]+[1-9]").hasMatch(p0))
+                                {
+                                return  "Enter from 1 to 10";
+                                }
+                                return null;
+
+                        },
+
+                        textInputType: TextInputType.number,
+
+                        hintText: 'Enter from 1 to 10',
+
+                      ),
+
+                    ]),
+
+              ),
+
+
+
+
+
+            ],
+
+          ),
+          Row(children: [
+            Expanded(
+              child: MaterialButton(
+                  padding: EdgeInsets.all(0),
+                  onPressed: () {
+             /*       GymCubit.get(context).addPlan(
+                      userId: 61,
+                      day: day,
+                      exercises: idExer,
+                      muscles: ['1','2'],
+                    );*/
+                    if(GymCubit.get(context).Rating==false){
+                      GymCubit.get(context).RatingBottomLanguage();
+                    }
+                    else if (_formKey.currentState!.validate())
+                    {
+                      GymCubit.get(context).RatingBottomLanguage();
+                    };
+                  },
+                  color: ColorsManager.primary,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('ADD',style: TextStyle(
+                        color: Colors.white,
+
+                      )),
+                      Icon(Icons.add,color: Colors.white,),
+                    ],
+                  )),
+            )
+          ],
+          ),
+
+
+        ],
+      ),
+    ),
   ),
 );
-
 }

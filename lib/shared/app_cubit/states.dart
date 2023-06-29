@@ -12,7 +12,10 @@ class GymChangeHomeLoading extends GymStates {}
 
 class GymChangeProfileState extends GymStates {}
 
+class GymChangeSelectIndexState extends GymStates {}
+
 class GymChangeLanguageState extends GymStates {}
+class GymAddPlanWedgitState extends GymStates {}
 
 class GymChangeBranchState extends GymStates {}
 
@@ -42,6 +45,15 @@ class GetUserErrorState extends GymStates {
   final String error;
 
   GetUserErrorState({required this.error});
+}
+class GetCoachLoadingState extends GymStates {}
+
+class GetCoachSuccessState extends GymStates {}
+
+class GetCoachErrorState extends GymStates {
+  final String error;
+
+  GetCoachErrorState({required this.error});
 }
 
 class GetAllUserLoadingState extends GymStates {}
@@ -91,5 +103,18 @@ class GetDatabaseState extends GymStates{
 class ChangeBottomSheetState extends GymStates{
 }
 
+class GetOnlyMusclesLoading extends GymStates {}
+class GetOnlyMusclesSuccess extends GymStates {}
+class GetOnlyMusclesError extends GymStates {
+  final String error;
 
-///////////////////////////////
+  GetOnlyMusclesError({required this.error});
+}
+
+class addPlanLoading extends GymStates {}
+class addPlanSuccess extends GymStates {}
+class addPlanError extends GymStates {
+  final String error;
+
+  addPlanError({required this.error});
+}
