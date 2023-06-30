@@ -31,7 +31,7 @@ class NewLayout extends StatelessWidget {
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
            floatingActionButton: FloatingActionButton(
         onPressed: () {
-          GymCubit.get(context).getAllUserData();
+          GymCubit.get(context).getAllUserData(coach:'Magico' );
           Navigator.push(context, MaterialPageRoute(builder: (context) =>  SearchScreen(),));
 
 

@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:blackgymcoach/model/model/coach_model.dart';
 import 'package:blackgymcoach/model/model/muscles/all_user.dart';
 import 'package:blackgymcoach/model/model/muscles/only_muscle.dart';
+import 'package:blackgymcoach/model/model/user_a7a.dart';
 import 'package:blackgymcoach/model/model/user_model.dart';
 import 'package:blackgymcoach/modules/home/home.dart';
 import 'package:blackgymcoach/modules/settings/settings.dart';
@@ -353,19 +354,49 @@ class GymCubit extends Cubit<GymStates> {
     });
   }
 
-
+//Magico
   AllUser? allUser;
-  Future<void> getAllUserData() async {
+  List<Notes>? ahmed;
+  Future<void> getAllUserData(
+    {
+  required String coach,
+}
+      ) async {
     emit(GetAllUserLoadingState());
     await DioHelper.getData(url: alluser)
        .then((value) {
-       allUser = AllUser.fromJson(value.data);
+      allUser= AllUser.fromJson(value.data);
+      ahmed=[];
+      for(int i=0; i<allUser!.users!.data!.length;i++){
+        if(allUser!.users!.data![i].coashName=='$coach'){
+          var aaa =allUser!.users!.data![i];
+          if(aaa.rate != null) {
+            ahmed!.add(Notes.fromJson(aaa.toJson()));
+            print(aaa!.toJson());
+            print(ahmed!.toList());
+          }
+          else print('dddddddddddddddd');
+         // print(allUser!);
+        }
+      }
+
+/*
+      if(allUser!.users!.data![index].coashName=='Magico') {
+        print('ddddddddddddddd$index');
+      }*/
+     /* value.data.forEach((element) {
+        if(element.data['users']['data']['coash_name']=='Magico') {
+          allUser= AllUser.fromJson(element.data);
+        }
+      });*/
       emit(GetAllUserSuccessState());
     })
         .catchError((error) {
+          print('sssssssssssssss$error}');
       emit(GetAllUserErrorState(error.toString()));
     });
   }
+
 
   CoachModel? coashModel;
   Future<void> getCoashData(

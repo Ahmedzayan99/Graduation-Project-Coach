@@ -1,13 +1,11 @@
+
 import 'package:blackgymcoach/model/model/muscles/all_user.dart';
-import 'package:blackgymcoach/modules/gym.dart';
+import 'package:blackgymcoach/model/model/user_a7a.dart';
 import 'package:blackgymcoach/modules/profileUser.dart';
 import 'package:blackgymcoach/shared/app_cubit/cubit.dart';
 import 'package:blackgymcoach/shared/app_cubit/states.dart';
 import 'package:blackgymcoach/shared/components.dart';
 import 'package:blackgymcoach/shared/styles/colors_manager.dart';
-import 'package:blackgymcoach/shared/styles/iconly_broken.dart';
-import 'package:blackgymcoach/shared/widgets/custom_defaultSlider.dart';
-import 'package:blackgymcoach/shared/widgets/custom_text_form_filed.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,8 +23,10 @@ class SearchScreen extends StatelessWidget {
           }
         },
     builder: (context, state) {
-          var allUser =GymCubit.get(context).allUser;
-          if (GymCubit.get(context).allUser == null) {
+
+             var allUser =GymCubit.get(context).ahmed;
+
+              if (GymCubit.get(context).allUser == null) {
             return defaultProgressIndicator();
           }
           else {
@@ -91,12 +91,12 @@ class SearchScreen extends StatelessWidget {
                         physics: BouncingScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return buildSearchItem(allUser!,context,index);
+                          return buildSearchItem(GymCubit.get(context).ahmed!,context,index);
                         },
                         separatorBuilder: (context, index) {
                           return   SizedBox(height: 20.0);
                         },
-                        itemCount: allUser!.users!.data!.length),
+                        itemCount: GymCubit.get(context).ahmed!.length),
                   ],
                 ),
               ),
@@ -106,11 +106,11 @@ class SearchScreen extends StatelessWidget {
     );
   }
 }
-Widget buildSearchItem(AllUser model ,context,index) =>
+Widget buildSearchItem(List<Notes> model ,context,index) =>
     InkWell(
       onTap:()
           {
-             GymCubit.get(context).getUserData(id:model!.users!.data![index].id as int);
+             GymCubit.get(context).getUserData(id:model![index].id as int);
                 Navigator.push(context, MaterialPageRoute(builder: (context) =>  ProfileUserScreen(),));
 },
          child: Row(
@@ -118,11 +118,8 @@ Widget buildSearchItem(AllUser model ,context,index) =>
       CircleAvatar(
         radius: 25.0,
         backgroundImage: NetworkImage(
-          '${ model.users != null
-              &&model.users!.data !=null
-              && model.users!.data![index] !=null
-              && model.users!.data![index].imageUrl != null?
-              model.users!.data![index].imageUrl:'ssss'
+          '${model![index] !=null ?
+              model![index].imageUrl:'ssss'
           }',
         ),
       ),
@@ -133,11 +130,8 @@ Widget buildSearchItem(AllUser model ,context,index) =>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${model.users != null
-                &&model.users!.data !=null
-                && model.users!.data![index] !=null
-                && model.users!.data![index].name != null?
-            model.users!.data![index].name:'null'}',
+            Text('${model !=null ?
+            model[index].name:'null'}',
           style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.orange,

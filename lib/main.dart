@@ -1,20 +1,17 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:blackgymcoach/modules/changeLanuage.dart';
 import 'package:blackgymcoach/modules/gym.dart';
 import 'package:blackgymcoach/modules/login_register/cubit/authentication_cubit.dart';
-import 'package:blackgymcoach/modules/login_register/homeSignup.dart';
+import 'package:blackgymcoach/modules/login_register/login/login.dart';
 import 'package:blackgymcoach/shared/app_cubit/cubit.dart';
 import 'package:blackgymcoach/shared/app_cubit/states.dart';
 import 'package:blackgymcoach/shared/bloc_observer.dart';
 import 'package:blackgymcoach/shared/global/app_localization/app_localization.dart';
-import 'package:blackgymcoach/shared/network/constants.dart';
 import 'package:blackgymcoach/shared/network/local/cache_helper.dart';
 import 'package:blackgymcoach/shared/network/remote/dio_helper.dart';
 import 'package:blackgymcoach/shared/styles/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'shared/styles/colors_manager.dart';
 
 
@@ -46,7 +43,7 @@ Future<void> main() async {
       duration: 4000,
       splashTransition: SplashTransition.fadeTransition,
       backgroundColor: ColorsManager.primary,
-      nextScreen:  HomeSignUpScreen(),
+      nextScreen:  LoginScreen(),
       splash:SvgPicture.asset(
           'assets/images/Logo.svg'
       ),

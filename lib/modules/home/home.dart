@@ -27,6 +27,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment:  CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          SizedBox(height: 40.0,),
                           Padding(
                         padding: EdgeInsetsDirectional.only(start: 40.0,),
                             child: Text(" Coach\n  Page",
@@ -37,10 +38,10 @@ class HomeScreen extends StatelessWidget {
                                 color: Colors.orange,
                               ),),
                           ),
-                          SizedBox(height: 40.0,),
+                          SizedBox(height: 80.0,),
                           Padding(
-                            padding: EdgeInsetsDirectional.only(start: 40.0,),
-                            child: Text( "Never give up\nLose weight, Build muscles.",
+                            padding: EdgeInsetsDirectional.only(start: 25.0),
+                            child: Text( "Never give up\nAdd Plan, Follow\nThe trainee with you.",
                               maxLines: 4,
                               style: const TextStyle(
                                 fontSize: 32.0,

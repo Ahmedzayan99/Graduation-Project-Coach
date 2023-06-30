@@ -1,42 +1,4 @@
-class AllUser {
-  bool? status;
-  Users? users;
-  AllUser({this.status, this.users});
-  AllUser.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    users = json['users'] != null ?  Users.fromJson(json['users']) : null;
-  }
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    if (this.users != null) {
-      data['users'] = this.users!.toJson();
-    }
-    return data;
-  }
-}
-
-class Users {
-  List<DataUser>? data;
-  Users({this.data});
-  Users.fromJson(Map<String, dynamic> json) {
-    if (json['data'] != null) {
-      data = <DataUser>[];
-      json['data'].forEach((v) {
-        data!.add(new DataUser.fromJson(v));
-      });
-    }
-  }
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class DataUser {
+class Notes {
   int? id;
   String? name;
   String? email;
@@ -53,25 +15,25 @@ class DataUser {
   String? type;
   String? membership;
   List<Rate>? rate;
-  DataUser(
-      {this.id,
-        this.name,
-        this.email,
-        this.phoneNumber,
-        this.imageUrl,
-        this.height,
-        this.weight,
-        this.age,
-        this.fatPercentage,
-        this.coashName,
-        this.gender,
-        this.createdAt,
-        this.updatedAt,
-        this.type,
-        this.membership,
-        this.rate});
 
-  DataUser.fromJson(Map<String, dynamic> json) {
+  Notes({this.id,
+    this.name,
+    this.email,
+    this.phoneNumber,
+    this.imageUrl,
+    this.height,
+    this.weight,
+    this.age,
+    this.fatPercentage,
+    this.coashName,
+    this.gender,
+    this.createdAt,
+    this.updatedAt,
+    this.type,
+    this.membership,
+    this.rate});
+
+  Notes.fromJson(Map<String, dynamic> json,) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
@@ -94,8 +56,7 @@ class DataUser {
       });
     }
   }
-
-  Map<String, dynamic> toJson() {
+  Map<String,dynamic> toMap(){
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
@@ -118,7 +79,6 @@ class DataUser {
     return data;
   }
 }
-
 class Rate {
   int? id;
   String? training;
