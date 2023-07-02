@@ -9,6 +9,7 @@ import 'package:blackgymcoach/shared/global/app_localization/app_localization.da
 import 'package:blackgymcoach/shared/network/local/cache_helper.dart';
 import 'package:blackgymcoach/shared/network/remote/dio_helper.dart';
 import 'package:blackgymcoach/shared/styles/themes.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,9 +17,9 @@ import 'shared/styles/colors_manager.dart';
 
 
 Future<void> main() async {
-
+//ext.kotlin_version = '1.6.10'
   WidgetsFlutterBinding.ensureInitialized();
-// await Firebase.initializeApp();
+  await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   await CacheHelper.init();
@@ -28,25 +29,21 @@ Future<void> main() async {
   late Widget widget;
   if (token != null) {
       widget = AnimatedSplashScreen(
-        splashIconSize: 160,
-        duration: 4000,
+        splashIconSize: 300,
+        duration: 3000,
         splashTransition: SplashTransition.fadeTransition,
-        backgroundColor: ColorsManager.primary,
+        backgroundColor: ColorsManager.black,
         nextScreen:  NewLayout(),
-        splash:SvgPicture.asset(
-            'assets/images/Logo.svg'
-        ),
+        splash: 'assets/images/Logo.png',
       );
       } else {
     widget = AnimatedSplashScreen(
-      splashIconSize: 160,
-      duration: 4000,
+      splashIconSize: 300,
+      duration: 3000,
       splashTransition: SplashTransition.fadeTransition,
-      backgroundColor: ColorsManager.primary,
+      backgroundColor: ColorsManager.black,
+      splash: 'assets/images/Logo.png',
       nextScreen:  LoginScreen(),
-      splash:SvgPicture.asset(
-          'assets/images/Logo.svg'
-      ),
     );
   }
 

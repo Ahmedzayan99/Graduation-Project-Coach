@@ -64,25 +64,15 @@ class LoginScreen extends StatelessWidget {
                       crossAxisAlignment:CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children:
-                      [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/images/Logo.svg',
-                              width:30.0,
-                              height: 30.0,
-                            ),
-                            Text(" BlackGym",
-                              style: TextStyle(
-                                inherit: true,
-                                color: ColorsManager.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                              ),),
-                          ],
-                        ),
+                      [  Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Image(image: AssetImage('assets/images/Logo.png',)
+                          ),
+                          SizedBox(width: 2.0,),
+                        ],
+                      ),
                         const SizedBox(height: 40.0,),
                         Center(
                           child: Column(

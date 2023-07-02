@@ -118,3 +118,18 @@ class addPlanError extends GymStates {
 
   addPlanError({required this.error});
 }
+class  UpdatedRateLoadingState extends GymStates {}
+
+class UpdatedRateSuccessState extends GymStates {}
+
+class UpdatedRateErrorState extends GymStates {}
+
+
+class GymChangeVisiblePasswordEditState extends GymStates {}
+class GymChangeVisiblePasswordConfirmEditState extends GymStates {}
+
+class UpdateUserPasswordLoadingState extends GymStates {}
+
+class UpdateUserPasswordSuccessState extends GymStates {}
+
+class UpdateUserPasswordErrorState extends GymStates {}

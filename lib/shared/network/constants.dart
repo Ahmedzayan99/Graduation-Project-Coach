@@ -9,11 +9,13 @@ const register = '/api/auth/register';
 const login = '/api/auth/login';
 const muscles = '/api/muscles/all';
 const  OonlyMuscles = '/api/muscle/exercises/';
-//const  coach = '/api/auth/user/41';
+const  coach = '/api/customcoach/29';
+const updateProfil = '/api/updateprofilcoash';
 const  alllexercises = '/api/exercises/all';
 //const  user = '/api/getprofil/61';
 const  alluser = '/api/allusers';
 const addplan='/api/store';
+const updatedRate='/api/updaterate';
 class user{
   static String  oneUser({
     int? id,

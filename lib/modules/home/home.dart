@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                           SizedBox(height: 80.0,),
                           Padding(
                             padding: EdgeInsetsDirectional.only(start: 25.0),
-                            child: Text( "Never give up\nAdd Plan, Follow\nThe trainee with you.",
+                            child: Text( "Add a plan,\nFollow the trainee.",
                               maxLines: 4,
                               style: const TextStyle(
                                 fontSize: 32.0,

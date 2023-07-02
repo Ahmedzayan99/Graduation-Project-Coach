@@ -10,15 +10,17 @@ import 'package:blackgymcoach/shared/styles/colors_manager.dart';
 import 'package:blackgymcoach/shared/styles/iconly_broken.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'edit_Profile.dart';
 class SettingsScreen extends StatelessWidget {
+
 
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return BlocConsumer<GymCubit, GymStates>(
         listener: (context, state) {
           if (State is GetCoachLoadingState) {
@@ -29,6 +31,7 @@ class SettingsScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          double start=double.parse('${GymCubit.get(context).coashModel!.coach!.rate!.stars}');
           var coashModel = GymCubit.get(context).coashModel;
           GymCubit cubit = GymCubit.get(context);
           return  Padding(
@@ -230,6 +233,7 @@ class SettingsScreen extends StatelessWidget {
                                       const SizedBox(
                                         height: 20.0,
                                       ),
+
                                     /*  Row(
                                         children: [
                                           Text(
@@ -326,6 +330,38 @@ class SettingsScreen extends StatelessWidget {
                                       const SizedBox(
                                         height: 20.0,
                                       ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Rate From Users",
+                                            style: const TextStyle(
+                                              color: Color.fromRGBO(
+                                                  251, 251, 251, 1),
+                                              fontSize: 14.0,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 20.0,
+                                          ),
+                                          Expanded(
+                                            child: Align(
+                                              alignment:AlignmentDirectional.centerEnd,
+                                              child: RatingBar.builder(
+                                                initialRating: start,
+                                                  itemBuilder: (BuildContext context, int index) {
+                                                    return Icon(Icons.star,color: ColorsManager.primary,);},
+                                                  onRatingUpdate: (double value) {},
+                                                itemCount: 5,
+                                                maxRating:start,
+                                                minRating:start,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 20.0,
+                                      ),
                                    /*   Row(
                                         children: [
                                           Text(
@@ -359,6 +395,37 @@ class SettingsScreen extends StatelessWidget {
                                         height: 20.0,
                                       ),*/
                                     ],),
+                                ),
+                                Row(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                                  children: [
+                                    MaterialButton(
+                                      height: 45,
+                                      minWidth: 70.0,
+                                      shape: const StadiumBorder(),
+                                      color: ColorsManager.primary,
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditProfileScreen(),
+                                            ));
+                                      },
+                                      child:  Text(
+                                          "${'editMyProfile'.tr(context)}",
+                                          style: const TextStyle(
+                                            inherit: false,
+                                            color: Colors.white,
+                                            fontSize: 20.0,
+                                            fontWeight:
+                                            FontWeight.bold,
+                                          )),
+                                    ),
+                                  ],
                                 ),
                                 /*    Row(
                                         crossAxisAlignment:
@@ -528,7 +595,7 @@ class SettingsScreen extends StatelessWidget {
                               width: 4.0,
                             ),
                             Text(
-                              "Our branches",
+                              "Our Branches",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -761,7 +828,7 @@ class SettingsScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.only(start:4.0,
+                                  padding: const EdgeInsetsDirectional.only(start:3.1,
                                   ),
                                   child:SvgPicture.asset(
                                     'assets/images/instagram-logo-A807AD378B-seeklogo.com.svg',
@@ -770,9 +837,7 @@ class SettingsScreen extends StatelessWidget {
                                     height: 22.0,
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 2.0,
-                                ),
+
                                 Text(
                                   "${'ourInstagram'.tr(context)}",
                                   maxLines: 1,

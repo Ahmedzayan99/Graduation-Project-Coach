@@ -5,12 +5,16 @@ import 'package:blackgymcoach/shared/app_cubit/cubit.dart';
 import 'package:blackgymcoach/shared/app_cubit/states.dart';
 import 'package:blackgymcoach/shared/components.dart';
 import 'package:blackgymcoach/shared/global/app_localization/app_localization.dart';
+import 'package:blackgymcoach/shared/network/constants.dart';
+import 'package:blackgymcoach/shared/network/local/cache_helper.dart';
 import 'package:blackgymcoach/shared/styles/colors_manager.dart';
 import 'package:blackgymcoach/shared/styles/iconly_broken.dart';
 import 'package:blackgymcoach/shared/widgets/custom_text_form_filed.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfileUserScreen extends StatefulWidget {
    ProfileUserScreen({super.key});
@@ -21,6 +25,11 @@ class ProfileUserScreen extends StatefulWidget {
 
 class _ProfileUserScreenState extends State<ProfileUserScreen> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController total=TextEditingController();
+  TextEditingController training=TextEditingController();
+  TextEditingController feeding=TextEditingController();
+  TextEditingController regularity=TextEditingController();
+  TextEditingController response=TextEditingController();
   List<int> selectedIndexes=[];
   List<String> idExer=[];
   List<String> dropDownButton = [
@@ -33,6 +42,8 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
     'friday',
   ];
   String day = 'sunday';
+
+  get state => null;
   Future<void> selectedDay({required String dayCode}) async {
     if (dayCode.isNotEmpty) {
       day = dayCode;
@@ -231,6 +242,24 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
           }
           if (State is GetUserErrorState) {
             return showErrorMassage(context);
+          }
+          if(state is UpdatedRateSuccessState){
+            Fluttertoast.showToast(
+              timeInSecForIosWeb:2 ,
+              msg: "Done ADD Rate",
+              backgroundColor: Colors.green,
+              textColor: Colors.black,
+            );
+            GymCubit.get(context).RatingBottomLanguage();
+
+          }
+          if(state is UpdatedRateErrorState){
+            Fluttertoast.showToast(
+              timeInSecForIosWeb:2 ,
+              msg: "Error ADD Rate",
+              backgroundColor: Colors.red,
+              textColor: Colors.black,
+            );
           }
         },
         builder: (context, state) {
@@ -830,7 +859,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                           Expanded(
                                             child: Padding(
                                               padding: const EdgeInsets.only(top: 5.0),
-                                              child: Text('${onlyMucsleModel!.data![index].name}',
+                                              child: Text('${onlyMucsleModel!.data![index].name!.toUpperCase()}',
                                                 maxLines: 2,
                                                 //overflow: TextOverflow.fade,
                                                 style: const TextStyle(
@@ -921,10 +950,10 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                                 padding: EdgeInsets.all(0),
                                                 onPressed: () {
                                                   GymCubit.get(context).addPlan(
-                                                    userId: 61,
+                                                    userId: int.parse('${userModel!.users!.id}'),
                                                     day: day,
                                                     exercises: idExer,
-                                                    muscles: ['1','2'],
+                                                    muscles: ['5'],
                                                   ).then((value) {
                                                     GymCubit.get(context).AddPlanWidget();
                                                   });
@@ -993,50 +1022,31 @@ Widget Rating (context) =>Form(
           ),
           SizedBox(height: 15.0,),
           Row(
-
             /*mainAxisAlignment: MainAxisAlignment.start,
-
                               crossAxisAlignment: CrossAxisAlignment.start,*/
-
             children: [
-
               Expanded(
-
                 child:Column(
-
                     crossAxisAlignment: CrossAxisAlignment.start,
-
                     mainAxisAlignment: MainAxisAlignment.center,
-
                     children: [
-
                       Text(
-
                         "Regularity",
-
                         style: const TextStyle(
-
                           color: Color.fromRGBO(
-
                               251, 251, 251, 1),
-
                           fontSize: 16.0,
-
                           fontWeight: FontWeight.bold,
-
                         ),
-
                       ),
-
                     ]),
-
               ),
-
               Expanded(
                 flex: 2,
                 child: Column(
                     children: [
                       CustomTextFormFiled(
+                        controller: regularity,
                         validator: (p0) {
                           if (p0!.isEmpty) {
                             return "${'thisFieldRequired'.tr(context)}";
@@ -1063,67 +1073,37 @@ Widget Rating (context) =>Form(
                     ]),
 
               ),
-
-
-
-
-
             ],
-
           ),
           SizedBox(height: 15.0,),
           Row(
-
             /*mainAxisAlignment: MainAxisAlignment.start,
-
                           crossAxisAlignment: CrossAxisAlignment.start,*/
-
             children: [
-
               Expanded(
-
                 child:Column(
-
                     crossAxisAlignment: CrossAxisAlignment.start,
-
                     mainAxisAlignment: MainAxisAlignment.center,
-
                     children: [
-
                       Text(
-
                         "Feeding",
-
                         style: const TextStyle(
-
                           color: Color.fromRGBO(
-
                               251, 251, 251, 1),
-
                           fontSize: 16.0,
-
                           fontWeight: FontWeight.bold,
-
                         ),
-
                       ),
-
                     ]),
-
               ),
-
               Expanded(
-
                 flex: 2,
-
                 child: Column(
-
                     children: [
-
                       CustomTextFormFiled(
+                        controller: feeding,
 
                         validator: (p0) {
-
                           if (p0!.isEmpty) {
                             return "${'thisFieldRequired'.tr(context)}";
                           }
@@ -1139,49 +1119,26 @@ Widget Rating (context) =>Form(
                             return  "Enter from 1 to 10";
                           }
                           return null;
-
                         },
-
                         textInputType: TextInputType.number,
-
                         hintText: 'Enter from 1 to 10',
-
                       ),
-
                     ]),
-
               ),
-
-
-
-
-
             ],
-
           ),
           SizedBox(height: 15.0,),
           Row(
-
             /*mainAxisAlignment: MainAxisAlignment.start,
-
-                          crossAxisAlignment: CrossAxisAlignment.start,*/
-
+                          crossAxisAlignment: CrossAxisAignment.start,*/
             children: [
-
               Expanded(
-
                 child:Column(
-
                     crossAxisAlignment: CrossAxisAlignment.start,
-
                     mainAxisAlignment: MainAxisAlignment.center,
-
                     children: [
-
                       Text(
-
                         "Training",
-
                         style: const TextStyle(
 
                           color: Color.fromRGBO(
@@ -1209,6 +1166,7 @@ Widget Rating (context) =>Form(
                     children: [
 
                       CustomTextFormFiled(
+                        controller:training,
 
                         validator: (p0) {
                           if (p0!.isEmpty) {
@@ -1296,6 +1254,7 @@ Widget Rating (context) =>Form(
                     children: [
 
                       CustomTextFormFiled(
+                        controller: response,
 
                         validator: (p0) {
                             if (p0!.isEmpty) {
@@ -1353,7 +1312,7 @@ Widget Rating (context) =>Form(
 
                       Text(
 
-                        "Total",
+                        "Personality",
 
                         style: const TextStyle(
 
@@ -1382,9 +1341,8 @@ Widget Rating (context) =>Form(
                     children: [
 
                       CustomTextFormFiled(
-
+                        controller:total,
                         validator: (p0) {
-
                           if (p0!.isEmpty) {
                             return "${'thisFieldRequired'.tr(context)}";
                           }
@@ -1402,7 +1360,6 @@ Widget Rating (context) =>Form(
                                 return null;
 
                         },
-
                         textInputType: TextInputType.number,
 
                         hintText: 'Enter from 1 to 10',
@@ -1412,49 +1369,44 @@ Widget Rating (context) =>Form(
                     ]),
 
               ),
-
-
-
-
-
             ],
-
           ),
-          Row(children: [
-            Expanded(
-              child: MaterialButton(
-                  padding: EdgeInsets.all(0),
-                  onPressed: () {
-             /*       GymCubit.get(context).addPlan(
-                      userId: 61,
-                      day: day,
-                      exercises: idExer,
-                      muscles: ['1','2'],
-                    );*/
-                    if(GymCubit.get(context).Rating==false){
-                      GymCubit.get(context).RatingBottomLanguage();
-                    }
-                    else if (_formKey.currentState!.validate())
-                    {
-                      GymCubit.get(context).RatingBottomLanguage();
-                    };
-                  },
-                  color: ColorsManager.primary,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('ADD',style: TextStyle(
-                        color: Colors.white,
-
-                      )),
-                      Icon(Icons.add,color: Colors.white,),
-                    ],
-                  )),
-            )
-          ],
+          ConditionalBuilder(
+           condition: state is UpdatedRateLoadingState ,
+            builder: (context) =>  defaultProgressIndicator(),
+            fallback: (context) =>Row(
+              children: [ Expanded(
+  child: MaterialButton(
+  padding: EdgeInsets.all(0),
+    onPressed: () {
+      if(GymCubit.get(context).Rating==false){
+        GymCubit.get(context).RatingBottomLanguage();
+      }
+      else if (_formKey.currentState!.validate())
+      {
+        GymCubit.get(context).updateRate(
+          total: total.text,
+          training: training.text,
+          feeding: feeding.text,
+          userId:GymCubit.get(context).userModel!.users!.id!.toString(),
+          coashId: CacheHelper.getDataIntoShPre(key: 'token'),
+          regularity: regularity.text,
+          response: response.text,);
+      };
+    },
+    color: ColorsManager.primary,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('ADD',style: TextStyle(
+          color: Colors.white,
+        )),
+        Icon(Icons.add,color: Colors.white,),
+      ],
+    )),
+  ),
+           ], ),
           ),
-
-
         ],
       ),
     ),

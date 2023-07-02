@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:blackgymcoach/model/model/coach_model.dart';
 import 'package:blackgymcoach/model/model/muscles/all_user.dart';
 import 'package:blackgymcoach/model/model/muscles/only_muscle.dart';
@@ -14,10 +13,13 @@ import 'package:blackgymcoach/shared/app_cubit/states.dart';
 import 'package:blackgymcoach/shared/network/constants.dart';
 import 'package:blackgymcoach/shared/network/local/cache_helper.dart';
 import 'package:blackgymcoach/shared/network/remote/dio_helper.dart';
+import 'package:blackgymcoach/shared/styles/iconly_broken.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 class GymCubit extends Cubit<GymStates> {
   GymCubit() : super(GymInitialState());
 
@@ -128,9 +130,109 @@ class GymCubit extends Cubit<GymStates> {
     print(fatPercentageInitial);
     emit(UpdateFatPercentageState());
   }
+  IconData iconPasswordLogin = IconlyBroken.hide;
+  bool isPasswordLogin = true;
+
+  void changePasswordLoginVisible() {
+    isPasswordLogin = !isPasswordLogin;
+    iconPasswordLogin =
+    isPasswordLogin ? IconlyBroken.hide : Icons.remove_red_eye_rounded;
+    emit(GymChangeVisiblePasswordEditState());
+  }
+  IconData iconPasswordConfirmLogin = IconlyBroken.hide;
+  bool isPasswordConfirmLogin = true;
+
+  void changePasswordConfirmVisible() {
+    isPasswordConfirmLogin = !isPasswordConfirmLogin;
+    iconPasswordConfirmLogin =
+    isPasswordConfirmLogin ? IconlyBroken.hide : Icons.remove_red_eye_rounded;
+    emit(GymChangeVisiblePasswordConfirmEditState());
+  }
+
+  bool isPasswordRegister = true;
+  IconData iconPasswordRegister = IconlyBroken.hide;
 
 
   File? profileImage;
+  var picker = ImagePicker();
+  void getProfileImage() async {
+    final XFile? pickedFile =
+    await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+      emit(ProfileImagePickerSuccessState());
+    } else {
+      print('no image selected');
+      emit(ProfileImagePickerErrorState());
+    }
+  }
+
+  Future<void> uploadProfileImage() async {
+    emit(UploadProfileImageLoadingState());
+    await firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('ahmed/${Uri
+        .file(profileImage!.path)
+        .pathSegments
+        .last}')
+        .putFile(profileImage!)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        print(value);
+        updateProfileImage(image: value);
+        //   updateProfileImage(image: value);
+      }).catchError((error) {
+        emit(UploadProfileImageErrorState());
+      });
+    }).catchError((error) {
+      emit(UploadProfileImageErrorState());
+    });
+  }
+
+
+  void updateProfileImage({
+    String? image,
+  }) {
+    DioHelper.postData(url:updateProfil , data: {
+      "coach_id":coashModel!.coach!.id,
+      "name":coashModel!.coach!.name,
+     // "email":coashModel!.coach!.email,
+      "password":'123456789',
+      "phone_number":coashModel!.coach!.phoneNumber,
+      "image":image,
+      "salary":coashModel!.coach!.salary,
+      "joined_at":coashModel!.coach!.joinedAt
+
+    }).then((value) {
+      profileImage = null;
+      getCoashData();
+    }).catchError((error) {
+      emit(UserUpdateErrorState());
+    });
+  }
+
+  void updateProfilePassword({
+    String? password,
+  }) {
+    emit(UpdateUserPasswordLoadingState());
+    DioHelper.postData(url:updateProfil , data: {
+      "coach_id":coashModel!.coach!.id,
+      "name":coashModel!.coach!.name,
+      // "email":coashModel!.coach!.email,
+      "password":password,
+      "phone_number":coashModel!.coach!.phoneNumber,
+      "image":coashModel!.coach!.image,
+      "salary":coashModel!.coach!.salary,
+      "joined_at":coashModel!.coach!.joinedAt
+
+
+    }).then((value) {
+      getCoashData();
+    }).catchError((error) {
+      emit(UpdateUserPasswordErrorState());
+    });
+  }
+ // File? profileImage;
  // var picker = ImagePicker();
 /*
   void getProfileImage() async {
@@ -403,7 +505,8 @@ class GymCubit extends Cubit<GymStates> {
   // required int id
   ) async {
     emit(GetCoachLoadingState());
-    await DioHelper.getData(url: user.oneUser(id: CacheHelper.getDataIntoShPre(key:'token')))
+//    ${coach}${CacheHelper.getDataIntoShPre(key:'token')}}
+    await DioHelper.getData(url:coach)
         .then((value) {
       coashModel = CoachModel.fromJson(value.data);
       emit(GetCoachSuccessState());
@@ -411,6 +514,7 @@ class GymCubit extends Cubit<GymStates> {
       emit(GetCoachErrorState(error: error));
     });
   }
+
 /*;
     await DioHelper.getData(url: user)
         .then((value) {
@@ -427,6 +531,34 @@ class GymCubit extends Cubit<GymStates> {
 
 */
 
+
+  Future<void> updateRate(
+     {
+  required String total,
+  required String training,
+       required String feeding,
+       required String userId,
+       required String coashId,
+       required String regularity,
+       required String response,
+    }
+      ) async {
+    emit(UpdatedRateLoadingState());
+    await DioHelper.postData(url: updatedRate, data: {
+    "training":training,
+    "feeding":feeding,
+    "user_id":userId,
+    "Coash_id":coashId,
+    "Regularity":regularity,
+    "Response":response,
+    "Total":total,
+    }).then((value) {
+      emit(UpdatedRateSuccessState());
+    }).catchError((error){
+      print(error.toString());
+      emit(UpdatedRateErrorState());
+    });
+  }
   List<String> dropDownButtonselectedDay = [
     'saturday',
     'sunday',
