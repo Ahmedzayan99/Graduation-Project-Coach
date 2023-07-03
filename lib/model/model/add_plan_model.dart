@@ -1,17 +1,19 @@
-class Addplan {
+// ignore_for_file: prefer_collection_literals
+
+class AddPlanModel {
   bool? success;
   Data? data;
 
-  Addplan({this.success, this.data});
+  AddPlanModel({this.success, this.data});
 
-  Addplan.fromJson(Map<String, dynamic> json) {
+  AddPlanModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -35,27 +37,27 @@ class Data {
     if (json['exercises'] != null) {
       exercises = <Exercises>[];
       json['exercises'].forEach((v) {
-        exercises!.add(new Exercises.fromJson(v));
+        exercises!.add(Exercises.fromJson(v));
       });
     }
     if (json['muscles'] != null) {
       muscles = <Muscles>[];
       json['muscles'].forEach((v) {
-        muscles!.add(new Muscles.fromJson(v));
+        muscles!.add(Muscles.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['day'] = this.day;
-    if (this.exercises != null) {
-      data['exercises'] = this.exercises!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['day'] = day;
+    if (exercises != null) {
+      data['exercises'] = exercises!.map((v) => v.toJson()).toList();
     }
-    if (this.muscles != null) {
-      data['muscles'] = this.muscles!.map((v) => v.toJson()).toList();
+    if (muscles != null) {
+      data['muscles'] = muscles!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -96,16 +98,16 @@ class Exercises {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['image'] = this.image;
-    data['groups'] = this.groups;
-    data['group_count'] = this.groupCount;
-    data['muscle_id'] = this.muscleId;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
+    data['description'] = description;
+    data['image'] = image;
+    data['groups'] = groups;
+    data['group_count'] = groupCount;
+    data['muscle_id'] = muscleId;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -136,13 +138,13 @@ class Muscles {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['image'] = this.image;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
+    data['description'] = description;
+    data['image'] = image;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

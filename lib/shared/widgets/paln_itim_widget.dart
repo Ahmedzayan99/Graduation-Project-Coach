@@ -90,10 +90,10 @@ class _NEWScreenState extends State<NEWScreen> {
                                                       value=! value;
                                                     });
                                                   },
-                                                  child: Row(
+                                                  child: const Row(
                                                     crossAxisAlignment: CrossAxisAlignment.center ,
                                                     children: [
-                                                      const Padding(
+                                                      Padding(
                                                         padding: EdgeInsetsDirectional.only(start: 10.0),
                                                         child: Text(
                                                           'SET 1',

@@ -1,23 +1,21 @@
-import 'dart:ui';
+// ignore_for_file: avoid_print
 
-import 'package:blackgymcoach/model/model/muscles/only_muscle.dart';
+
 import 'package:blackgymcoach/shared/app_cubit/cubit.dart';
 import 'package:blackgymcoach/shared/app_cubit/states.dart';
 import 'package:blackgymcoach/shared/components.dart';
 import 'package:blackgymcoach/shared/global/app_localization/app_localization.dart';
-import 'package:blackgymcoach/shared/network/constants.dart';
 import 'package:blackgymcoach/shared/network/local/cache_helper.dart';
 import 'package:blackgymcoach/shared/styles/colors_manager.dart';
 import 'package:blackgymcoach/shared/styles/iconly_broken.dart';
 import 'package:blackgymcoach/shared/widgets/custom_text_form_filed.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfileUserScreen extends StatefulWidget {
-   ProfileUserScreen({super.key});
+   const ProfileUserScreen({super.key});
 
   @override
   State<ProfileUserScreen> createState() => _ProfileUserScreenState();
@@ -250,7 +248,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
               backgroundColor: Colors.green,
               textColor: Colors.black,
             );
-            GymCubit.get(context).RatingBottomLanguage();
+            GymCubit.get(context).ratingBottomLanguage();
 
           }
           if(state is UpdatedRateErrorState){
@@ -293,7 +291,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                   child: Container(
                                     decoration: const BoxDecoration(borderRadius:BorderRadius.all(Radius.circular(10))),
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    child: Image(
+                                    child: const Image(
                                       image: AssetImage(
                                           'assets/images/gym.jpg'),
                                       fit: BoxFit.cover,
@@ -330,8 +328,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                         const SizedBox(
                           height: 15.0,
                         ),
-                        Container(
-
+                        SizedBox(
                           height:50.0,
                           child: Expanded(
 
@@ -725,17 +722,17 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                           height: 20.0,
                         ),
                         Padding(
-                          padding:EdgeInsetsDirectional.only(start:5.0,end: 5.0,),
+                          padding:const EdgeInsetsDirectional.only(start:5.0,end: 5.0,),
                           child: Expanded(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                GymCubit.get(context).addplanWidget?SizedBox(): Expanded(
+                                GymCubit.get(context).addPlanBool?const SizedBox(): Expanded(
                                   child: MaterialButton(onPressed: () {
                                     GymCubit.get(context).getOnlyMuscles().then((value) {
                                       //     showProgressIndicator(onlyMucsleModel! ,context);
-                                      GymCubit.get(context).AddPlanWidget();
+                                      GymCubit.get(context).addPlanWidget();
                                     });
 
                                   },
@@ -749,16 +746,16 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(width:12.0 ,),
-                                GymCubit.get(context).Rating?SizedBox():Expanded(
+                                const SizedBox(width:12.0 ,),
+                                GymCubit.get(context).rating?const SizedBox():Expanded(
                                   child: MaterialButton(onPressed: () {
-                                    if(GymCubit.get(context).Rating==false){
-                                      GymCubit.get(context).RatingBottomLanguage();
+                                    if(GymCubit.get(context).rating==false){
+                                      GymCubit.get(context).ratingBottomLanguage();
                                     }
                                     else if (_formKey.currentState!.validate())
                                     {
-                                      GymCubit.get(context).RatingBottomLanguage();
-                                    };
+                                      GymCubit.get(context).ratingBottomLanguage();
+                                    }
                                   },
                                     height: 40.0,
                                     color: ColorsManager.primary,
@@ -809,11 +806,11 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                         const SizedBox(
                           height: 20.0,
                         ),
-                        GymCubit.get(context).addplanWidget?Container(
+                        GymCubit.get(context).addPlanBool?Container(
                           decoration: BoxDecoration(
                             //color: Colors.grey,
                             border: Border.all(color:ColorsManager.primary,),
-                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                             //  backgroundBlendMode: BlendMode.color,
                           ),
                           child: Padding(
@@ -822,7 +819,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Row(
+                                const Row(
                                   children: [
                                     Text('Add a plan ',
                                       style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,
@@ -830,10 +827,10 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                     Icon(IconlyBroken.exercise_1,color: Colors.red),
                                   ],
                                 ),
-                                SizedBox(height: 10.0,),
+                                const SizedBox(height: 10.0,),
                                 ListView.separated(
                                   shrinkWrap: true,
-                                  physics: BouncingScrollPhysics(),
+                                  physics: const BouncingScrollPhysics(),
                                   scrollDirection: Axis.vertical,
                                   itemBuilder:(context, index){
                                     return ListTile(
@@ -850,7 +847,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                style: BorderStyle.solid),*/
                                               borderRadius: BorderRadius.circular(20.0),
                                               image: DecorationImage(
-                                                image: NetworkImage('${onlyMucsleModel!.data![index].image}'),
+                                                image: NetworkImage('${onlyMucsleModel.data![index].image}'),
                                                 fit: BoxFit.fill,),
 
                                             ),
@@ -859,7 +856,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                           Expanded(
                                             child: Padding(
                                               padding: const EdgeInsets.only(top: 5.0),
-                                              child: Text('${onlyMucsleModel!.data![index].name!.toUpperCase()}',
+                                              child: Text(onlyMucsleModel.data![index].name!.toUpperCase(),
                                                 maxLines: 2,
                                                 //overflow: TextOverflow.fade,
                                                 style: const TextStyle(
@@ -872,17 +869,17 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                         ],
                                       ),
                                       tileColor: selectedIndexes.contains(index)?ColorsManager.primary:Colors.grey,
-                                      shape:OutlineInputBorder(borderSide: BorderSide.none,borderRadius: BorderRadius.all(Radius.circular(20))),
+                                      shape:const OutlineInputBorder(borderSide: BorderSide.none,borderRadius: BorderRadius.all(Radius.circular(20))),
 
                                       onTap: () {
                                         setState(() {
                                           if(selectedIndexes.contains(index)){
                                             selectedIndexes.remove(index);
-                                            idExer.remove('${onlyMucsleModel!.data![index].id}');
+                                            idExer.remove('${onlyMucsleModel.data![index].id}');
                                           }
                                           else{
                                             selectedIndexes.add(index);
-                                            idExer.add('${onlyMucsleModel!.data![index].id}');
+                                            idExer.add('${onlyMucsleModel.data![index].id}');
                                           }
                                           //     Navigator.pop(context);
                                           //    showProgressIndicator(onlyMucsleModel!, context);
@@ -892,13 +889,13 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                       },
                                     );},
                                   separatorBuilder: (context, index) => Column(children: [
-                                    SizedBox(height: 5.0,),
+                                    const SizedBox(height: 5.0,),
                                     Container(
                                       width: double.infinity,
                                       height: 0.2,
                                       color: Colors.grey[300],
                                     ),
-                                    SizedBox(height: 5.0,),
+                                    const SizedBox(height: 5.0,),
 
                                   ],),
                                   itemCount: onlyMucsleModel!.data!.length,
@@ -914,22 +911,22 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                             //       clipBehavior: Clip.antiAliasWithSaveLayer,
                                             decoration: BoxDecoration(
                                               color:  ColorsManager.primary,
-                                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                                             ),
                                             child: Padding(
                                               padding: const EdgeInsets.only(left: 9.0),
                                               child: DropdownButton(
-                                                style: TextStyle(color: Colors.white),
+                                                style: const TextStyle(color: Colors.white),
                                                 // style: TextStyle(color: Colors.pink),
                                                 iconEnabledColor: Colors.white,
                                                 value:day,
                                                 dropdownColor: Colors.grey[900],
-                                                borderRadius: BorderRadius.all(Radius.circular(20),),
+                                                borderRadius: const BorderRadius.all(Radius.circular(20),),
                                                 items:dropDownButton.map((String items)
                                                 {
                                                   return  DropdownMenuItem(
-                                                    child: Text(items.toUpperCase(),),
                                                     value: items,
+                                                    child: Text(items.toUpperCase(),),
                                                   );
                                                 }) .toList() ,
                                                 onChanged: (value) {
@@ -944,10 +941,10 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(width: 60.0,),
+                                          const SizedBox(width: 60.0,),
                                           Expanded(
                                             child: MaterialButton(
-                                                padding: EdgeInsets.all(0),
+                                                padding: const EdgeInsets.all(0),
                                                 onPressed: () {
                                                   GymCubit.get(context).addPlan(
                                                     userId: int.parse('${userModel!.users!.id}'),
@@ -955,11 +952,11 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                                     exercises: idExer,
                                                     muscles: ['5'],
                                                   ).then((value) {
-                                                    GymCubit.get(context).AddPlanWidget();
+                                                    GymCubit.get(context).addPlanWidget();
                                                   });
                                                 },
                                                 color: ColorsManager.primary,
-                                                child: Row(
+                                                child: const Row(
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     Text('ADD',style: TextStyle(
@@ -980,11 +977,11 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                             ),
                           ),
                         ):const SizedBox(height: 20.0,),
-                        if( GymCubit.get(context).addplanWidget)
-                          if( GymCubit.get(context).Rating)
-                            SizedBox(
+                        if( GymCubit.get(context).addPlanBool)
+                          if( GymCubit.get(context).rating)
+                            const SizedBox(
                               height: 30.0,),
-                        GymCubit.get(context).Rating?Rating(context):const SizedBox(
+                        GymCubit.get(context).rating?rating(context):const SizedBox(
                           height: 20.0,
                         ),
 
@@ -1000,10 +997,10 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
     );
   }
 
-Widget Rating (context) =>Form(
+Widget rating (context) =>Form(
   key:_formKey ,
   child:   Container(
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
         color: Colors.grey,
       borderRadius: BorderRadius.all(Radius.circular(10.0))
    
@@ -1012,7 +1009,7 @@ Widget Rating (context) =>Form(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Row(
+          const Row(
             children: [
               Text('Add a Rating ',
                 style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,
@@ -1020,19 +1017,19 @@ Widget Rating (context) =>Form(
               Icon(Icons.bar_chart,color: Colors.red),
             ],
           ),
-          SizedBox(height: 15.0,),
+          const SizedBox(height: 15.0,),
           Row(
             /*mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,*/
             children: [
-              Expanded(
+              const Expanded(
                 child:Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Regularity",
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Color.fromRGBO(
                               251, 251, 251, 1),
                           fontSize: 16.0,
@@ -1051,7 +1048,7 @@ Widget Rating (context) =>Form(
                           if (p0!.isEmpty) {
                             return "${'thisFieldRequired'.tr(context)}";
                           }
-                          else if (p0!.length>2) {
+                          else if (p0.length>2) {
                             return "Enter from 1 to 10";
                           }
                           else if(RegExp(r"^[a-zA-Z]").hasMatch(p0))
@@ -1075,19 +1072,19 @@ Widget Rating (context) =>Form(
               ),
             ],
           ),
-          SizedBox(height: 15.0,),
+          const SizedBox(height: 15.0,),
           Row(
             /*mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,*/
             children: [
-              Expanded(
+              const Expanded(
                 child:Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Feeding",
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Color.fromRGBO(
                               251, 251, 251, 1),
                           fontSize: 16.0,
@@ -1107,7 +1104,7 @@ Widget Rating (context) =>Form(
                           if (p0!.isEmpty) {
                             return "${'thisFieldRequired'.tr(context)}";
                           }
-                          else if (p0!.length>2) {
+                          else if (p0.length>2) {
                             return "Enter from 1 to 10";
                           }
                           else if(RegExp(r"^[a-zA-Z]").hasMatch(p0))
@@ -1127,19 +1124,19 @@ Widget Rating (context) =>Form(
               ),
             ],
           ),
-          SizedBox(height: 15.0,),
+          const SizedBox(height: 15.0,),
           Row(
             /*mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAignment.start,*/
             children: [
-              Expanded(
+              const Expanded(
                 child:Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Training",
-                        style: const TextStyle(
+                        style: TextStyle(
 
                           color: Color.fromRGBO(
 
@@ -1172,7 +1169,7 @@ Widget Rating (context) =>Form(
                           if (p0!.isEmpty) {
                             return "${'thisFieldRequired'.tr(context)}";
                           }
-                          else if (p0!.length>2) {
+                          else if (p0.length>2) {
                           return "Enter from 1 to 10";
                           }
                               else if(RegExp(r"^[a-zA-Z]").hasMatch(p0))
@@ -1204,7 +1201,7 @@ Widget Rating (context) =>Form(
             ],
 
           ),
-          SizedBox(height: 15.0,),
+          const SizedBox(height: 15.0,),
           Row(
 
             /*mainAxisAlignment: MainAxisAlignment.start,
@@ -1213,7 +1210,7 @@ Widget Rating (context) =>Form(
 
             children: [
 
-              Expanded(
+              const Expanded(
 
                 child:Column(
 
@@ -1227,7 +1224,7 @@ Widget Rating (context) =>Form(
 
                         "Response",
 
-                        style: const TextStyle(
+                        style: TextStyle(
 
                           color: Color.fromRGBO(
 
@@ -1260,7 +1257,7 @@ Widget Rating (context) =>Form(
                             if (p0!.isEmpty) {
                               return "${'thisFieldRequired'.tr(context)}";
                               }
-                              else if (p0!.length>2) {
+                              else if (p0.length>2) {
                               return "Enter from 1 to 10";
                               }
                               else if(RegExp(r"^[a-zA-Z]").hasMatch(p0))
@@ -1291,7 +1288,7 @@ Widget Rating (context) =>Form(
             ],
 
           ),
-          SizedBox(height: 15.0,),
+          const SizedBox(height: 15.0,),
           Row(
 
             /*mainAxisAlignment: MainAxisAlignment.start,
@@ -1300,7 +1297,7 @@ Widget Rating (context) =>Form(
 
             children: [
 
-              Expanded(
+              const Expanded(
 
                 child:Column(
 
@@ -1314,7 +1311,7 @@ Widget Rating (context) =>Form(
 
                         "Personality",
 
-                        style: const TextStyle(
+                        style: TextStyle(
 
                           color: Color.fromRGBO(
 
@@ -1346,7 +1343,7 @@ Widget Rating (context) =>Form(
                           if (p0!.isEmpty) {
                             return "${'thisFieldRequired'.tr(context)}";
                           }
-                                else if (p0!.length>2) {
+                                else if (p0.length>2) {
                                 return "Enter from 1 to 10";
                                 }
                                 else if(RegExp(r"^[a-zA-Z]").hasMatch(p0))
@@ -1377,10 +1374,10 @@ Widget Rating (context) =>Form(
             fallback: (context) =>Row(
               children: [ Expanded(
   child: MaterialButton(
-  padding: EdgeInsets.all(0),
+  padding: const EdgeInsets.all(0),
     onPressed: () {
-      if(GymCubit.get(context).Rating==false){
-        GymCubit.get(context).RatingBottomLanguage();
+      if(GymCubit.get(context).rating==false){
+        GymCubit.get(context).ratingBottomLanguage();
       }
       else if (_formKey.currentState!.validate())
       {
@@ -1389,13 +1386,13 @@ Widget Rating (context) =>Form(
           training: training.text,
           feeding: feeding.text,
           userId:GymCubit.get(context).userModel!.users!.id!.toString(),
-          coashId: CacheHelper.getDataIntoShPre(key: 'token'),
+          coachId: CacheHelper.getDataIntoShPre(key: 'token'),
           regularity: regularity.text,
           response: response.text,);
-      };
+      }
     },
     color: ColorsManager.primary,
-    child: Row(
+    child: const Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text('ADD',style: TextStyle(

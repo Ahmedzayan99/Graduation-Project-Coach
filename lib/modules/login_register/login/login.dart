@@ -1,6 +1,6 @@
 
 
-// ignore_for_file: avoid_print, must_be_immutable
+// ignore_for_file: avoid_print, must_be_immutable, deprecated_member_use
 
 import 'package:blackgymcoach/modules/gym.dart';
 import 'package:blackgymcoach/modules/login_register/cubit/authentication_cubit.dart';
@@ -64,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                       crossAxisAlignment:CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children:
-                      [  Row(
+                      [  const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [

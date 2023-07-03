@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_collection_literals
+
 class UserModel {
   bool? status;
   Users? users;
@@ -6,14 +8,14 @@ class UserModel {
 
   UserModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    users = json['users'] != null ? new Users.fromJson(json['users']) : null;
+    users = json['users'] != null ? Users.fromJson(json['users']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    if (this.users != null) {
-      data['users'] = this.users!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['status'] = status;
+    if (users != null) {
+      data['users'] = users!.toJson();
     }
     return data;
   }
@@ -71,29 +73,29 @@ class Users {
     if (json['rate'] != null) {
       rate = <Rate>[];
       json['rate'].forEach((v) {
-        rate!.add(new Rate.fromJson(v));
+        rate!.add(Rate.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['phone_number'] = this.phoneNumber;
-    data['image_url'] = this.imageUrl;
-    data['height'] = this.height;
-    data['weight'] = this.weight;
-    data['age'] = this.age;
-    data['fat_percentage'] = this.fatPercentage;
-    data['coash_name'] = this.coashName;
-    data['gender'] = this.gender;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['type'] = this.type;
-    if (this.rate != null) {
-      data['rate'] = this.rate!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['phone_number'] = phoneNumber;
+    data['image_url'] = imageUrl;
+    data['height'] = height;
+    data['weight'] = weight;
+    data['age'] = age;
+    data['fat_percentage'] = fatPercentage;
+    data['coash_name'] = coashName;
+    data['gender'] = gender;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['type'] = type;
+    if (rate != null) {
+      data['rate'] = rate!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -137,17 +139,17 @@ class Rate {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['training'] = this.training;
-    data['feeding'] = this.feeding;
-    data['user_id'] = this.userId;
-    data['Coash_id'] = this.coashId;
-    data['Regularity'] = this.regularity;
-    data['Response'] = this.response;
-    data['Total'] = this.total;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['training'] = training;
+    data['feeding'] = feeding;
+    data['user_id'] = userId;
+    data['Coash_id'] = coashId;
+    data['Regularity'] = regularity;
+    data['Response'] = response;
+    data['Total'] = total;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

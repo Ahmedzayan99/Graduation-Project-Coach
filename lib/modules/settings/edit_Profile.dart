@@ -51,7 +51,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         }
       },
       builder: (context, state) {
-        var coashModel = GymCubit.get(context).coashModel;
+        var coashModel = GymCubit.get(context).coachModel;
         var profileImage = GymCubit.get(context).profileImage;
         var profileImage1;
         if (profileImage==null){

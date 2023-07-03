@@ -1,16 +1,8 @@
-import 'dart:ui';
-
 import 'package:blackgymcoach/shared/app_cubit/cubit.dart';
 import 'package:blackgymcoach/shared/app_cubit/states.dart';
-import 'package:blackgymcoach/shared/components.dart';
-import 'package:blackgymcoach/shared/global/app_localization/app_localization.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../model/home_images_model.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -23,7 +15,7 @@ class HomeScreen extends StatelessWidget {
                 return Scaffold(
                     body:CustomPaint(
                       painter: MyCustomPainter(),
-                      child: Column(
+                      child: const Column(
                         crossAxisAlignment:  CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -32,7 +24,7 @@ class HomeScreen extends StatelessWidget {
                         padding: EdgeInsetsDirectional.only(start: 40.0,),
                             child: Text(" Coach\n  Page",
                               maxLines: 2,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 42.0,
                                 fontWeight: FontWeight.w800,
                                 color: Colors.orange,
@@ -43,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                             padding: EdgeInsetsDirectional.only(start: 25.0),
                             child: Text( "Add a plan,\nFollow the trainee.",
                               maxLines: 4,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 32.0,
                                 fontWeight: FontWeight.w800,
                                 color: Colors.grey,
@@ -65,7 +57,7 @@ class MyCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
-      ..color = Color.fromRGBO(0, 0, 0, 0.7294117647058823)
+      ..color = const Color.fromRGBO(0, 0, 0, 0.7294117647058823)
       ..style = PaintingStyle.fill;
 
 

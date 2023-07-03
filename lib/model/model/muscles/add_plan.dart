@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_collection_literals
+
 class AddPlan {
   bool? success;
   Data? data;
@@ -6,12 +8,12 @@ class AddPlan {
 
   AddPlan.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -37,12 +39,12 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['day'] = this.day;
-    data['exercises'] = this.exercises;
-    data['muscles'] = this.muscles;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['day'] = day;
+    data['exercises'] = exercises;
+    data['muscles'] = muscles;
     return data;
   }
 }

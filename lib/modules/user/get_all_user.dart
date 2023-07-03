@@ -1,16 +1,16 @@
+// ignore_for_file: unnecessary_null_comparison
 
-import 'package:blackgymcoach/model/model/muscles/all_user.dart';
-import 'package:blackgymcoach/model/model/user_a7a.dart';
-import 'package:blackgymcoach/modules/profileUser.dart';
+import 'package:blackgymcoach/model/model/all_user_model.dart';
+import 'package:blackgymcoach/modules/user/profile_user.dart';
 import 'package:blackgymcoach/shared/app_cubit/cubit.dart';
 import 'package:blackgymcoach/shared/app_cubit/states.dart';
 import 'package:blackgymcoach/shared/components.dart';
 import 'package:blackgymcoach/shared/styles/colors_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+class AllUsersScreen extends StatelessWidget {
+  const AllUsersScreen({super.key});
 
-class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GymCubit, GymStates>(
@@ -24,7 +24,6 @@ class SearchScreen extends StatelessWidget {
         },
     builder: (context, state) {
 
-             var allUser =GymCubit.get(context).ahmed;
 
               if (GymCubit.get(context).allUser == null) {
             return defaultProgressIndicator();
@@ -34,7 +33,7 @@ class SearchScreen extends StatelessWidget {
               appBar: AppBar(
                   title:Row(
                     children: [
-                      Text('Trainees with you',),
+                      const Text('Trainees with you',),
                       Icon(Icons.person,color: ColorsManager.primary,)
                     ],
                   ),
@@ -86,17 +85,17 @@ class SearchScreen extends StatelessWidget {
                         //   suffixIcon: Icon(IconlyBroken.message),
                       ),
                     ),*/
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     ListView.separated(
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return buildSearchItem(GymCubit.get(context).ahmed!,context,index);
+                          return buildSearchItem(GymCubit.get(context).usersOfCoach!,context,index);
                         },
                         separatorBuilder: (context, index) {
-                          return   SizedBox(height: 20.0);
+                          return   const SizedBox(height: 20.0);
                         },
-                        itemCount: GymCubit.get(context).ahmed!.length),
+                        itemCount: GymCubit.get(context).usersOfCoach!.length),
                   ],
                 ),
               ),
@@ -106,24 +105,24 @@ class SearchScreen extends StatelessWidget {
     );
   }
 }
-Widget buildSearchItem(List<Notes> model ,context,index) =>
+Widget buildSearchItem(List<AllUserModel> model ,context,index) =>
     InkWell(
       onTap:()
           {
-             GymCubit.get(context).getUserData(id:model![index].id as int);
-                Navigator.push(context, MaterialPageRoute(builder: (context) =>  ProfileUserScreen(),));
+             GymCubit.get(context).getUserData(id:model[index].id as int);
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>  const ProfileUserScreen(),));
 },
          child: Row(
     children: [
       CircleAvatar(
         radius: 25.0,
         backgroundImage: NetworkImage(
-          '${model![index] !=null ?
-              model![index].imageUrl:'ssss'
+          '${model[index] !=null ?
+              model[index].imageUrl:'ssss'
           }',
         ),
       ),
-      SizedBox(
+      const SizedBox(
         width: 20.0,
       ),
       Expanded(
@@ -132,7 +131,7 @@ Widget buildSearchItem(List<Notes> model ,context,index) =>
           children: [
             Text('${model !=null ?
             model[index].name:'null'}',
-          style: TextStyle(
+          style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.orange,
                 fontSize:20.0,

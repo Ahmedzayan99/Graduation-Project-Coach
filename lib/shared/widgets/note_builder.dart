@@ -26,10 +26,10 @@ class NotasBuilder extends StatelessWidget{
           ),
           itemCount: tasks.length,
         ),
-        fallback:(BuildContext context)=> Center(
+        fallback:(BuildContext context)=> const Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Icon(Icons.menu,
                   size: 100.0,
                   color: Colors.white),

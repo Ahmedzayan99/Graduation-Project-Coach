@@ -8,7 +8,7 @@ import 'package:blackgymcoach/shared/styles/iconly_broken.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'Search.dart';
+import 'user/get_all_user.dart';
 class NewLayout extends StatelessWidget {
   final GlobalKey<ScaffoldState>_key = GlobalKey();
   NewLayout({Key? key}) : super(key: key);
@@ -32,14 +32,14 @@ class NewLayout extends StatelessWidget {
            floatingActionButton: FloatingActionButton(
         onPressed: () {
           GymCubit.get(context).getAllUserData(coach:'Magico' );
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>  SearchScreen(),));
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>  const AllUsersScreen(),));
 
 
         },
-        child: Icon(Icons.person),),
+        child: const Icon(Icons.person),),
            bottomNavigationBar:BottomAppBar(
-        color: Color.fromRGBO(65, 65, 65, 1),
-        shape: CircularNotchedRectangle(),
+        color: const Color.fromRGBO(65, 65, 65, 1),
+        shape: const CircularNotchedRectangle(),
         notchMargin: 5.0,clipBehavior: Clip.antiAliasWithSaveLayer,
         child:Container(
         height: 70.0,

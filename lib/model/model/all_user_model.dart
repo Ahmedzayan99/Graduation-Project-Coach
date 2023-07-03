@@ -1,4 +1,6 @@
-class Notes {
+// ignore_for_file: prefer_collection_literals
+
+class AllUserModel {
   int? id;
   String? name;
   String? email;
@@ -16,7 +18,7 @@ class Notes {
   String? membership;
   List<Rate>? rate;
 
-  Notes({this.id,
+  AllUserModel({this.id,
     this.name,
     this.email,
     this.phoneNumber,
@@ -33,7 +35,7 @@ class Notes {
     this.membership,
     this.rate});
 
-  Notes.fromJson(Map<String, dynamic> json,) {
+  AllUserModel.fromJson(Map<String, dynamic> json,) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
@@ -52,29 +54,29 @@ class Notes {
     if (json['rate'] != null) {
       rate = <Rate>[];
       json['rate'].forEach((v) {
-        rate!.add(new Rate.fromJson(v));
+        rate!.add(Rate.fromJson(v));
       });
     }
   }
   Map<String,dynamic> toMap(){
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['phone_number'] = this.phoneNumber;
-    data['image_url'] = this.imageUrl;
-    data['height'] = this.height;
-    data['weight'] = this.weight;
-    data['age'] = this.age;
-    data['fat_percentage'] = this.fatPercentage;
-    data['coash_name'] = this.coashName;
-    data['gender'] = this.gender;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['type'] = this.type;
-    data['membership'] = this.membership;
-    if (this.rate != null) {
-      data['rate'] = this.rate!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['phone_number'] = phoneNumber;
+    data['image_url'] = imageUrl;
+    data['height'] = height;
+    data['weight'] = weight;
+    data['age'] = age;
+    data['fat_percentage'] = fatPercentage;
+    data['coash_name'] = coashName;
+    data['gender'] = gender;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['type'] = type;
+    data['membership'] = membership;
+    if (rate != null) {
+      data['rate'] = rate!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -117,17 +119,17 @@ class Rate {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['training'] = this.training;
-    data['feeding'] = this.feeding;
-    data['user_id'] = this.userId;
-    data['Coash_id'] = this.coashId;
-    data['Regularity'] = this.regularity;
-    data['Response'] = this.response;
-    data['Total'] = this.total;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['training'] = training;
+    data['feeding'] = feeding;
+    data['user_id'] = userId;
+    data['Coash_id'] = coashId;
+    data['Regularity'] = regularity;
+    data['Response'] = response;
+    data['Total'] = total;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

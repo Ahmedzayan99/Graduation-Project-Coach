@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_collection_literals
+
 class CoachModel {
   bool? status;
   Coach? coach;
@@ -6,14 +8,14 @@ class CoachModel {
 
   CoachModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    coach = json['coach'] != null ? new Coach.fromJson(json['coach']) : null;
+    coach = json['coach'] != null ? Coach.fromJson(json['coach']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    if (this.coach != null) {
-      data['coach'] = this.coach!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['status'] = status;
+    if (coach != null) {
+      data['coach'] = coach!.toJson();
     }
     return data;
   }
@@ -46,21 +48,21 @@ class Coach {
     image = json['image'];
     salary = json['salary'];
     joinedAt = json['joined_at'];
-    rate = json['rate'] != null ? new Rate.fromJson(json['rate']) : null;
+    rate = json['rate'] != null ? Rate.fromJson(json['rate']) : null;
 
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['phone_number'] = this.phoneNumber;
-    data['image'] = this.image;
-    data['salary'] = this.salary;
-    data['joined_at'] = this.joinedAt;
-    if (this.rate != null) {
-      data['rate'] = this.rate!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['phone_number'] = phoneNumber;
+    data['image'] = image;
+    data['salary'] = salary;
+    data['joined_at'] = joinedAt;
+    if (rate != null) {
+      data['rate'] = rate!.toJson();
     }
     return data;
   }
@@ -91,13 +93,13 @@ class Rate {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['Coash_id'] = this.coashId;
-    data['stars'] = this.stars;
-    data['updated_at'] = this.createdAt;
-    data['created_at'] = this.updatedAt;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['Coash_id'] = coashId;
+    data['stars'] = stars;
+    data['updated_at'] = createdAt;
+    data['created_at'] = updatedAt;
     return data;
   }
 }
