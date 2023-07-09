@@ -252,6 +252,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
 
           }
           if(state is UpdatedRateErrorState){
+            print(CacheHelper.getDataIntoShPre(key: 'token').toString());
             Fluttertoast.showToast(
               timeInSecForIosWeb:2 ,
               msg: "Error ADD Rate",
@@ -1386,7 +1387,6 @@ Widget rating (context) =>Form(
           training: training.text,
           feeding: feeding.text,
           userId:GymCubit.get(context).userModel!.users!.id!.toString(),
-          coachId: CacheHelper.getDataIntoShPre(key: 'token'),
           regularity: regularity.text,
           response: response.text,);
       }

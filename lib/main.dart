@@ -21,9 +21,10 @@ Future<void> main() async {
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   await CacheHelper.init();
-  var token = CacheHelper.getDataIntoShPre(key: 'token');
+  var token = CacheHelper.getDataIntoShPre(key:'token');
   late Widget widget;
   if (token != null) {
+    print(token);
       widget = AnimatedSplashScreen(
         splashIconSize: 300,
         duration: 3000,

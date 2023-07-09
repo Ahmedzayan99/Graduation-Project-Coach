@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 const login = '/api/auth/login';
-const  coach = '/api/customcoach/29';
+const  coach = '/api/customcoach/';
 const updateProfile = '/api/updateprofilcoash';
 const  allExercises = '/api/exercises/all';
 const  allUserUrl = '/api/allusers';

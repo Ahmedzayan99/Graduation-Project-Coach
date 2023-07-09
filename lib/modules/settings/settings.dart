@@ -20,9 +20,6 @@ class SettingsScreen extends StatelessWidget {
 
     return BlocConsumer<GymCubit, GymStates>(
         listener: (context, state) {
-          if (State is GetCoachLoadingState) {
-            return showProgressIndicator(context);
-          }
           if (State is GetCoachErrorState) {
             return showErrorMassage(context);
           }
@@ -31,11 +28,7 @@ class SettingsScreen extends StatelessWidget {
           double start=double.parse('${GymCubit.get(context).coachModel!.coach!.rate!.stars}');
           var coashModel = GymCubit.get(context).coachModel;
           GymCubit cubit = GymCubit.get(context);
-        if(state is GetCoachLoadingState)
-          {
-            return defaultProgressIndicator();
-          }
-          else {
+           if(coashModel!.coach !=null) {
             return Padding(
               padding: const EdgeInsets.only(
                 right: 25,
@@ -906,6 +899,9 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
             );
+          }
+          else {
+          return defaultProgressIndicator();
           }
         });
   }

@@ -8,6 +8,7 @@ import 'package:blackgymcoach/modules/login_register/cubit/authentication_states
 import 'package:blackgymcoach/shared/app_cubit/cubit.dart';
 import 'package:blackgymcoach/shared/components.dart';
 import 'package:blackgymcoach/shared/global/app_localization/app_localization.dart';
+import 'package:blackgymcoach/shared/network/local/cache_helper.dart';
 import 'package:blackgymcoach/shared/styles/colors_manager.dart';
 import 'package:blackgymcoach/shared/styles/iconly_broken.dart';
 import 'package:blackgymcoach/shared/widgets/custom_text_form_filed.dart';
@@ -38,6 +39,7 @@ class LoginScreen extends StatelessWidget {
               backgroundColor: Colors.white,
               textColor: Colors.black,
             );
+            print('${CacheHelper.getDataIntoShPre(key:'token')}');
             GymCubit.get(context).current =0;
             Navigator.pushAndRemoveUntil(context,
                 MaterialPageRoute(builder: (context) =>  NewLayout(),), (route) => false);

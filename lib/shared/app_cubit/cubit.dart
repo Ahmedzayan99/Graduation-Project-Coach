@@ -234,7 +234,7 @@ class GymCubit extends Cubit<GymStates> {
   ) async {
     emit(GetCoachLoadingState());
 //
-    await DioHelper.getData(url:coach)
+    await DioHelper.getData(url:'$coach${CacheHelper.getDataIntoShPre(key:'token')}')
         .then((value) {
       coachModel = CoachModel.fromJson(value.data);
       emit(GetCoachSuccessState());
@@ -249,7 +249,6 @@ class GymCubit extends Cubit<GymStates> {
   required String training,
        required String feeding,
        required String userId,
-       required String coachId,
        required String regularity,
        required String response,
     }
@@ -259,7 +258,7 @@ class GymCubit extends Cubit<GymStates> {
     "training":training,
     "feeding":feeding,
     "user_id":userId,
-    "Coash_id":coachId,
+    "Coash_id":'${CacheHelper.getDataIntoShPre(key:'token')}',
     "Regularity":regularity,
     "Response":response,
     "Total":total,

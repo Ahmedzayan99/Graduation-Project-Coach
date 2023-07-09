@@ -36,23 +36,25 @@ import 'authentication_states.dart';
         isPasswordRegister ? IconlyBroken.hide : Icons.remove_red_eye_rounded;
     emit(GymChangeVisiblePasswordRegisterState());
   }
+
   LoginModel? loginModel;
-  void userLogin({
+  String? messageLoginSuccess;
+  Future<void> userLogin({
     required String? email,
     required String? password,
   }) async {
     emit(LoginLoadingState());
-    print('11111111111111');
     DioHelper.postData(url: login, data: {
       'email': email,
       'password': password,
     }).then((value) {
       loginModel = LoginModel.fromJson(value.data);
-      CacheHelper.saveData(key: "token", value: loginModel?.data?.id);
+      CacheHelper.saveData(key: "token", value: loginModel?.coash?.id);
+      messageLoginSuccess=loginModel!.message;
       emit(LoginSuccessState());
     }).catchError((error) {
       emit(LoginErrorState(error.toString()));
-      print('LoginErrorState$error');
+      print('error in Login${error.toString()}');
     });
   }
   }
