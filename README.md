@@ -16,5 +16,7 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 
-https://github.com/Ahmedzayan99/Graduation-Project-Coach/assets/122310086/f77e1550-6d73-4cfe-bc68-82f19cfb9463
+
+https://github.com/Ahmedzayan99/Graduation-Project-Coach/assets/122310086/d2c3f38e-2aa4-413a-aef0-ee73c1ce5524
+
 
